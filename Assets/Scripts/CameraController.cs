@@ -1,26 +1,38 @@
+using System;
+using System.Collections;
+using Cinemachine;
 using UnityEngine;
 
 [ExecuteAlways]
 public class CameraController : MonoBehaviour
 {
-    [Header("Follow")]
+    [Header("Follow and Look At")]
+    [SerializeField] private Transform lookAtTargetTransform;
     [SerializeField] private Transform followTargetTransform;
     [SerializeField] private Vector3 followOffset;
 
-    [Header("Look At")]
-    [SerializeField] private Transform lookAtTargetTransform;
+    [Header("Control")]
     [SerializeField] private PlayerInputManager pim;
-
-    [Header("Limits")]
     [SerializeField] private float cameraMinYDistance = 0.2f;
     [SerializeField] private float cameraMaxYDistance = 7;
+
+    [Header("FOV Change Settings")]
+    [SerializeField] private float defaultFov;
+    [SerializeField] private float fovIncreaseAmount = 20f;
+    [SerializeField] private float fovChangeTime = 0.1f;
+
+    [SerializeField] private CinemachineVirtualCamera cam;
+    private bool isFovIncreased;
 
     private Vector3 followTargetPreviousPosition;
     private Vector3 followTargetPositionDifference;
 
     private void Awake()
     {
+        cam = GetComponent<CinemachineVirtualCamera>();
+
         //Default values
+        defaultFov = cam.m_Lens.FieldOfView;
         transform.position = followTargetTransform.position + followOffset;
         followTargetPreviousPosition = followTargetTransform.position;
     }
@@ -48,5 +60,29 @@ public class CameraController : MonoBehaviour
         }
 
         transform.LookAt(lookAtTargetTransform);
+    }
+
+    //TODO: BETTER
+    public IEnumerator ChangeCameraFov(bool isIncreasing)
+    {
+        float timePassed = 0f;
+        float speed = fovIncreaseAmount / fovChangeTime;
+        
+        while (timePassed <= fovChangeTime)
+        {
+            if (isIncreasing) cam.m_Lens.FieldOfView += speed * Time.deltaTime;
+            else cam.m_Lens.FieldOfView -= speed * Time.deltaTime;
+
+            if (isIncreasing && (cam.m_Lens.FieldOfView >= defaultFov + fovIncreaseAmount)) break;
+            if (!isIncreasing && (cam.m_Lens.FieldOfView <= defaultFov)) break;
+
+            timePassed += Time.deltaTime;
+            yield return null;
+        }
+
+        if (isIncreasing) cam.m_Lens.FieldOfView = defaultFov + fovIncreaseAmount;
+        else cam.m_Lens.FieldOfView = defaultFov;
+
+        isFovIncreased = isIncreasing;
     }
 }

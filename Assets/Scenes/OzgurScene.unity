@@ -628,12 +628,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 546d8c8ea23e3604fa035b8025fb44cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lookAtTargetTransform: {fileID: 3400908208368458342}
   followTargetTransform: {fileID: 3400908208368458342}
   followOffset: {x: 0, y: 2, z: -7}
-  lookAtTargetTransform: {fileID: 3400908208368458342}
   pim: {fileID: 3400908208368458345}
   cameraMinYDistance: -1
   cameraMaxYDistance: 4
+  defaultFov: 40
+  fovIncreaseAmount: 20
+  fovChangeTime: 0.1
+  cam: {fileID: 1355708126}
 --- !u!114 &1355708126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1672,7 +1676,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lookInput: {x: 0, y: 0}
   moveInput: {x: 0, y: 0}
+  isRunKeyDown: 0
   isRunKey: 0
+  isRunKeyUp: 0
   isJumpKeyDown: 0
 --- !u!114 &3400908208368458346
 MonoBehaviour:
@@ -1690,6 +1696,8 @@ MonoBehaviour:
   runningSpeed: 8
   jumpSpeed: 10
   rotatingSpeed: 0.1
+  acceleration: 5
+  deceleration: 10
 --- !u!114 &3400908208368458347
 MonoBehaviour:
   m_ObjectHideFlags: 0
