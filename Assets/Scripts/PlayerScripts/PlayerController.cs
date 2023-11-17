@@ -1,11 +1,15 @@
-using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     [Header("Assign")]
-    [SerializeField] private float movingSpeed = 8f;
+    [SerializeField] private float walkingSpeed = 5f;
+    [SerializeField] private float runningSpeed = 8f;
+    [SerializeField] private float jumpSpeed = 10f;
+    //[SerializeField] private float dashSpeed = 10f;
     [SerializeField] private float rotatingSpeed = 0.1f;
+
+    private float movingSpeed;
 
     private Rigidbody rb;
     private PlayerInputManager pim;
@@ -20,9 +24,16 @@ public class PlayerController : MonoBehaviour
         cameraTransform = GameObject.Find("PlayerCamera").transform;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         DecideIdleOrMoving();
+        DecideWalkingOrRunning();
+
+        HandleJump();
+    }
+
+    private void FixedUpdate()
+    {
         HandleMovement();
     }
 
@@ -30,6 +41,26 @@ public class PlayerController : MonoBehaviour
     {
         psd.isMoving = pim.moveInput != Vector2.zero;
         psd.isIdle = !psd.isMoving;
+    }
+
+    private void DecideWalkingOrRunning()
+    {
+        if (!psd.isMoving) return;
+
+        psd.isRunning = pim.isRunKey;
+        psd.isWalking = !psd.isRunning;
+
+        if (psd.isRunning) movingSpeed = runningSpeed;
+        else movingSpeed = walkingSpeed;
+    }
+
+    private void HandleJump()
+    {
+        if (psd.isGrounded && pim.isJumpKeyDown)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, jumpSpeed, rb.velocity.z);
+            psd.isJumping = true;
+        }
     }
 
     private void HandleMovement()
