@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerInputManager : MonoBehaviour
 {
+    public static float sensitivity;
+
     private RobotInputActions pia;
 
     [Header("Info - No Touch")]
@@ -17,11 +19,13 @@ public class PlayerInputManager : MonoBehaviour
     {
         pia = new RobotInputActions();
         pia.Default.Enable();
+
+        sensitivity = PlayerPrefs.GetFloat("Sensitivity");
     }
 
     private void Update()
     {
-        lookInput = pia.Default.Look.ReadValue<Vector2>(); //TODO: SENSITIVITY
+        lookInput = pia.Default.Look.ReadValue<Vector2>() * sensitivity;
         moveInput = pia.Default.Movement.ReadValue<Vector2>();
 
         isRunKeyDown = pia.Default.Run.WasPressedThisFrame();

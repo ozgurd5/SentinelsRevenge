@@ -21,9 +21,6 @@ public class PlayerController : MonoBehaviour
     private CameraController cameraController;
     private Transform cameraTransform;
 
-    private bool isIncreasingSpeed;
-    private bool isDecreasingSpeed;
-
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -103,32 +100,26 @@ public class PlayerController : MonoBehaviour
     private void StopSpeedCoroutines()
     {
         StopAllCoroutines();
-        isIncreasingSpeed = false;
-        isDecreasingSpeed = false;
     }
 
     private IEnumerator ChangeSpeed(bool isIncreasing, float movingSpeedToReach)
     {
         if (isIncreasing)
         {
-            isIncreasingSpeed = true;
             while (movingSpeed < movingSpeedToReach)
             {
                 movingSpeed += acceleration * Time.deltaTime;
                 yield return null;
             }
-            isIncreasingSpeed = false;
         }
 
         else
         {
-            isDecreasingSpeed = true;
             while (movingSpeed > movingSpeedToReach)
             {
                 movingSpeed -= deceleration * Time.deltaTime;
                 yield return null;
             }
-            isDecreasingSpeed = false;
         }
 
         movingSpeed = movingSpeedToReach;
