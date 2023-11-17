@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using Cinemachine;
 using UnityEngine;
@@ -13,16 +12,17 @@ public class CameraController : MonoBehaviour
 
     [Header("Control")]
     [SerializeField] private PlayerInputManager pim;
-    [SerializeField] private float cameraMinYDistance = 0.2f;
-    [SerializeField] private float cameraMaxYDistance = 7;
+    [SerializeField] private float cameraMinYDistance = 1f;
+    [SerializeField] private float cameraMaxYDistance = 6f;
 
-    [Header("FOV Change Settings")]
-    [SerializeField] private float defaultFov;
-    [SerializeField] private float fovIncreaseAmount = 20f;
-    [SerializeField] private float fovChangeTime = 0.1f;
+    [Header("Fov and Aim")]
+    [SerializeField] private float fovChangingSpeed = 20f;
+    [SerializeField] private float defaultFovValue = 40f;
+    [SerializeField] private float aimFovValue = 20f;
+    [SerializeField] private float runningFovValue = 50f;
 
-    [SerializeField] private CinemachineVirtualCamera cam;
-    private bool isFovIncreased;
+    private CinemachineVirtualCamera cam;
+    private IEnumerator fovChangingRoutine;
 
     private Vector3 followTargetPreviousPosition;
     private Vector3 followTargetPositionDifference;
@@ -32,7 +32,7 @@ public class CameraController : MonoBehaviour
         cam = GetComponent<CinemachineVirtualCamera>();
 
         //Default values
-        defaultFov = cam.m_Lens.FieldOfView;
+        fovChangingRoutine = ChangeCameraFovRoutine(0);
         transform.position = followTargetTransform.position + followOffset;
         followTargetPreviousPosition = followTargetTransform.position;
     }
@@ -62,27 +62,45 @@ public class CameraController : MonoBehaviour
         transform.LookAt(lookAtTargetTransform);
     }
 
-    //TODO: BETTER
-    public IEnumerator ChangeCameraFov(bool isIncreasing)
+    public enum FovMode
     {
-        float timePassed = 0f;
-        float speed = fovIncreaseAmount / fovChangeTime;
-        
-        while (timePassed <= fovChangeTime)
+        DefaultFov,
+        AimFov,
+        RunningFov
+    }
+
+    public void ChangeCameraFov(FovMode fovMode)
+    {
+        StopCoroutine(fovChangingRoutine);
+        fovChangingRoutine = ChangeCameraFovRoutine(fovMode);
+        StartCoroutine(fovChangingRoutine);
+    }
+
+    private IEnumerator ChangeCameraFovRoutine(FovMode fovMode)
+    {
+        float targetFov;
+        if (fovMode == FovMode.DefaultFov) targetFov = defaultFovValue;
+        else if (fovMode == FovMode.AimFov) targetFov = aimFovValue;
+        else targetFov = runningFovValue;
+
+        if (targetFov > cam.m_Lens.FieldOfView) //If we need to increase
         {
-            if (isIncreasing) cam.m_Lens.FieldOfView += speed * Time.deltaTime;
-            else cam.m_Lens.FieldOfView -= speed * Time.deltaTime;
-
-            if (isIncreasing && (cam.m_Lens.FieldOfView >= defaultFov + fovIncreaseAmount)) break;
-            if (!isIncreasing && (cam.m_Lens.FieldOfView <= defaultFov)) break;
-
-            timePassed += Time.deltaTime;
-            yield return null;
+            while (cam.m_Lens.FieldOfView < targetFov)
+            {
+                cam.m_Lens.FieldOfView += fovChangingSpeed * Time.deltaTime;
+                yield return null;
+            }
         }
 
-        if (isIncreasing) cam.m_Lens.FieldOfView = defaultFov + fovIncreaseAmount;
-        else cam.m_Lens.FieldOfView = defaultFov;
+        else
+        {
+            while (cam.m_Lens.FieldOfView > targetFov)
+            {
+                cam.m_Lens.FieldOfView -= fovChangingSpeed * Time.deltaTime;
+                yield return null;
+            }
+        }
 
-        isFovIncreased = isIncreasing;
+        cam.m_Lens.FieldOfView = targetFov;
     }
 }

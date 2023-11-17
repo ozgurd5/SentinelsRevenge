@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -10,8 +9,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpSpeed = 10f;
     //[SerializeField] private float dashSpeed = 10f;
     [SerializeField] private float rotatingSpeed = 0.1f;
-    [SerializeField] private float acceleration = 2f;
-    [SerializeField] private float deceleration = 5f;
+    [SerializeField] private float acceleration = 5f;
+    [SerializeField] private float deceleration = 10f;
 
     private float movingSpeed;
 
@@ -68,16 +67,16 @@ public class PlayerController : MonoBehaviour
         if (pim.isRunKeyDown)
         {
             StopSpeedCoroutines();
-            StartCoroutine(cameraController.ChangeCameraFov(true));
             StartCoroutine(ChangeSpeed(true, runningSpeed));
+            cameraController.ChangeCameraFov(CameraController.FovMode.RunningFov);
         }
 
         //Running to walking
         else if (pim.isRunKeyUp)
         {
             StopSpeedCoroutines();
-            StartCoroutine(cameraController.ChangeCameraFov(false));
             StartCoroutine(ChangeSpeed(false, walkingSpeed));
+            cameraController.ChangeCameraFov(CameraController.FovMode.DefaultFov);
         }
     }
 
@@ -126,7 +125,7 @@ public class PlayerController : MonoBehaviour
             isDecreasingSpeed = true;
             while (movingSpeed > movingSpeedToReach)
             {
-                movingSpeed -= acceleration * Time.deltaTime;
+                movingSpeed -= deceleration * Time.deltaTime;
                 yield return null;
             }
             isDecreasingSpeed = false;
