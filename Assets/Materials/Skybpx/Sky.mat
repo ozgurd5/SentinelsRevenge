@@ -136,7 +136,7 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _SunDisk: 1
-    - _SunSize: 0.4
+    - _SunSize: 0.2
     - _SunSizeConvergence: 5
     - _Surface: 0
     - _WorkflowMode: 1
