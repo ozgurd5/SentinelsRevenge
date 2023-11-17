@@ -210,7 +210,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.13870122, y: 0, z: 0, w: 0.99033433}
+  m_LocalRotation: {x: 0.07688196, y: 0, z: 0, w: 0.9970402}
   m_LocalPosition: {x: 2.464, y: 2, z: -11.645656}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -628,12 +628,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 546d8c8ea23e3604fa035b8025fb44cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lookAtTargetTransform: {fileID: 1798919746}
   followTargetTransform: {fileID: 3400908208368458342}
   followOffset: {x: 0, y: 2, z: -7}
-  lookAtTargetTransform: {fileID: 3400908208368458342}
   pim: {fileID: 3400908208368458345}
-  cameraMinYDistance: -1
-  cameraMaxYDistance: 4
+  cameraMinYDistance: 1
+  cameraMaxYDistance: 6
+  fovChangingSpeed: 100
+  defaultFovValue: 40
+  aimFovValue: 20
+  runningFovValue: 50
 --- !u!114 &1355708126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -681,7 +685,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1355708124}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.13870122, y: 0, z: 0, w: 0.99033433}
+  m_LocalRotation: {x: 0.07688196, y: 0, z: 0, w: 0.9970402}
   m_LocalPosition: {x: 2.464, y: 2, z: -11.645656}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -907,6 +911,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1798919745
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1798919746}
+  m_Layer: 0
+  m_Name: CameraLookAt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1798919746
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1798919745}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.914, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3400908208368458342}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1826714096
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1045,37 +1080,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 50f14679070435a46a1082fd5e6dfe55, type: 3}
---- !u!1 &2059664885
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2059664886}
-  m_Layer: 0
-  m_Name: CameraFollow
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2059664886
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2059664885}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: -5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3400908208368458342}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2076752439
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1607,7 +1611,7 @@ Transform:
   m_Children:
   - {fileID: 7141169297427257872}
   - {fileID: 6854289073889915647}
-  - {fileID: 2059664886}
+  - {fileID: 1798919746}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &3400908208368458343
@@ -1672,7 +1676,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lookInput: {x: 0, y: 0}
   moveInput: {x: 0, y: 0}
+  isRunKeyDown: 0
   isRunKey: 0
+  isRunKeyUp: 0
   isJumpKeyDown: 0
 --- !u!114 &3400908208368458346
 MonoBehaviour:
@@ -1690,6 +1696,9 @@ MonoBehaviour:
   runningSpeed: 8
   jumpSpeed: 10
   rotatingSpeed: 0.1
+  acceleration: 5
+  deceleration: 10
+  runningFovChangeAmount: 10
 --- !u!114 &3400908208368458347
 MonoBehaviour:
   m_ObjectHideFlags: 0

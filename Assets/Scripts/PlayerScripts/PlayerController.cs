@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -8,20 +9,32 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpSpeed = 10f;
     //[SerializeField] private float dashSpeed = 10f;
     [SerializeField] private float rotatingSpeed = 0.1f;
+    [SerializeField] private float acceleration = 5f;
+    [SerializeField] private float deceleration = 10f;
 
     private float movingSpeed;
 
     private Rigidbody rb;
     private PlayerInputManager pim;
     private PlayerStateData psd;
+
+    private CameraController cameraController;
     private Transform cameraTransform;
+
+    private bool isIncreasingSpeed;
+    private bool isDecreasingSpeed;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         pim = GetComponent<PlayerInputManager>();
         psd = GetComponent<PlayerStateData>();
-        cameraTransform = GameObject.Find("PlayerCamera").transform;
+
+        cameraController = GameObject.Find("PlayerCamera").GetComponent<CameraController>();
+        cameraTransform = cameraController.transform;
+
+        //Default Value
+        movingSpeed = walkingSpeed;
     }
 
     private void Update()
@@ -50,8 +63,21 @@ public class PlayerController : MonoBehaviour
         psd.isRunning = pim.isRunKey;
         psd.isWalking = !psd.isRunning;
 
-        if (psd.isRunning) movingSpeed = runningSpeed;
-        else movingSpeed = walkingSpeed;
+        //Walking to running
+        if (pim.isRunKeyDown)
+        {
+            StopSpeedCoroutines();
+            StartCoroutine(ChangeSpeed(true, runningSpeed));
+            cameraController.ChangeCameraFov(CameraController.FovMode.RunningFov);
+        }
+
+        //Running to walking
+        else if (pim.isRunKeyUp)
+        {
+            StopSpeedCoroutines();
+            StartCoroutine(ChangeSpeed(false, walkingSpeed));
+            cameraController.ChangeCameraFov(CameraController.FovMode.DefaultFov);
+        }
     }
 
     private void HandleJump()
@@ -72,5 +98,39 @@ public class PlayerController : MonoBehaviour
         if (psd.isMoving) transform.forward = Vector3.Slerp(transform.forward, movingDirection, rotatingSpeed);
 
         rb.velocity = new Vector3(movingDirection.x, rb.velocity.y, movingDirection.z);
+    }
+
+    private void StopSpeedCoroutines()
+    {
+        StopAllCoroutines();
+        isIncreasingSpeed = false;
+        isDecreasingSpeed = false;
+    }
+
+    private IEnumerator ChangeSpeed(bool isIncreasing, float movingSpeedToReach)
+    {
+        if (isIncreasing)
+        {
+            isIncreasingSpeed = true;
+            while (movingSpeed < movingSpeedToReach)
+            {
+                movingSpeed += acceleration * Time.deltaTime;
+                yield return null;
+            }
+            isIncreasingSpeed = false;
+        }
+
+        else
+        {
+            isDecreasingSpeed = true;
+            while (movingSpeed > movingSpeedToReach)
+            {
+                movingSpeed -= deceleration * Time.deltaTime;
+                yield return null;
+            }
+            isDecreasingSpeed = false;
+        }
+
+        movingSpeed = movingSpeedToReach;
     }
 }
