@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 50f14679070435a46a1082fd5e6dfe55
+guid: 8483ceeb47614e34faf8cc9c7cd71470
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -33,9 +33,9 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: CharacterArmature|Attack
-      takeName: CharacterArmature|Attack
-      internalID: 7674154492727649536
+      name: Attack
+      takeName: CharacterArmature|CharacterArmature|Attack
+      internalID: -4463060715753937513
       firstFrame: 0
       lastFrame: 23
       wrapMode: 0
@@ -62,9 +62,9 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: CharacterArmature|Dead
-      takeName: CharacterArmature|Dead
-      internalID: -8962682184670050497
+      name: Dead
+      takeName: CharacterArmature|CharacterArmature|Dead
+      internalID: -1120185544704852128
       firstFrame: 0
       lastFrame: 11
       wrapMode: 0
@@ -91,9 +91,9 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: CharacterArmature|Idle
-      takeName: CharacterArmature|Idle
-      internalID: 9061338213343248790
+      name: Idle
+      takeName: CharacterArmature|CharacterArmature|Idle
+      internalID: -5029870632999375028
       firstFrame: 0
       lastFrame: 45
       wrapMode: 0
@@ -120,9 +120,9 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: CharacterArmature|Run
-      takeName: CharacterArmature|Run
-      internalID: 1395189703230314720
+      name: Run
+      takeName: CharacterArmature|CharacterArmature|Run.001
+      internalID: -6498322790675761170
       firstFrame: 0
       lastFrame: 20
       wrapMode: 0
@@ -149,40 +149,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: CharacterArmature|Shoot
-      takeName: CharacterArmature|Shoot
-      internalID: -7328885368346570464
+      name: Shoot
+      takeName: HEAD|CharacterArmature|CharacterArmature|Shoot
+      internalID: -4304571948077304812
       firstFrame: 0
       lastFrame: 8
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: CharacterArmature|Walk
-      takeName: CharacterArmature|Walk
-      internalID: -5599002979973759676
-      firstFrame: 0
-      lastFrame: 35
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -241,7 +212,7 @@ ModelImporter:
     secondaryUVMinLightmapResolution: 40
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
-    useFileScale: 0
+    useFileScale: 1
     strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
