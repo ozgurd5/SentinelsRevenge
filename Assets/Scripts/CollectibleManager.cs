@@ -76,6 +76,6 @@ public class CollectibleManager : MonoBehaviour
         else ped.UnlockGun();
 
         psd.playerMainState = PlayerStateData.PlayerMainState.Normal;
-        Destroy(gameObject);
+        gameObject.SetActive(false); //CloseInteractionText gives null ref error because of the interactionCanvas if we destroy. //TODO: fix
     }
 }
