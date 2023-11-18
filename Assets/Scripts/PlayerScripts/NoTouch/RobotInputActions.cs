@@ -80,6 +80,15 @@ public partial class @RobotInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""3eaf112c-b353-40db-9476-728d3c430f37"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -192,6 +201,17 @@ public partial class @RobotInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3ad100ec-c540-4d9f-94eb-9e56d14c84a8"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -206,6 +226,7 @@ public partial class @RobotInputActions: IInputActionCollection2, IDisposable
         m_Default_Jump = m_Default.FindAction("Jump", throwIfNotFound: true);
         m_Default_Aim = m_Default.FindAction("Aim", throwIfNotFound: true);
         m_Default_Attack = m_Default.FindAction("Attack", throwIfNotFound: true);
+        m_Default_Interact = m_Default.FindAction("Interact", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -273,6 +294,7 @@ public partial class @RobotInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Default_Jump;
     private readonly InputAction m_Default_Aim;
     private readonly InputAction m_Default_Attack;
+    private readonly InputAction m_Default_Interact;
     public struct DefaultActions
     {
         private @RobotInputActions m_Wrapper;
@@ -283,6 +305,7 @@ public partial class @RobotInputActions: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Default_Jump;
         public InputAction @Aim => m_Wrapper.m_Default_Aim;
         public InputAction @Attack => m_Wrapper.m_Default_Attack;
+        public InputAction @Interact => m_Wrapper.m_Default_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Default; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -310,6 +333,9 @@ public partial class @RobotInputActions: IInputActionCollection2, IDisposable
             @Attack.started += instance.OnAttack;
             @Attack.performed += instance.OnAttack;
             @Attack.canceled += instance.OnAttack;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
         }
 
         private void UnregisterCallbacks(IDefaultActions instance)
@@ -332,6 +358,9 @@ public partial class @RobotInputActions: IInputActionCollection2, IDisposable
             @Attack.started -= instance.OnAttack;
             @Attack.performed -= instance.OnAttack;
             @Attack.canceled -= instance.OnAttack;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
         }
 
         public void RemoveCallbacks(IDefaultActions instance)
@@ -357,5 +386,6 @@ public partial class @RobotInputActions: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
 }

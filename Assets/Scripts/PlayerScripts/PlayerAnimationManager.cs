@@ -34,14 +34,6 @@ public class PlayerAnimationManager : MonoBehaviour
         else if (psd.isIdle) PlayAnimation("Idle");
         else if (psd.isWalking) PlayAnimation("Walk");
         else if (psd.isRunning) PlayAnimation("Run");
-
-        if (Input.GetKeyDown(KeyCode.E)) Debug.Log(transform.eulerAngles.x);
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            Vector3 temp = transform.eulerAngles;
-            temp.x = -20;
-            transform.eulerAngles = temp;
-        }
     }
 
     private void PlayAnimation(string animationName)

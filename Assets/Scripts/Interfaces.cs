@@ -5,6 +5,7 @@ public interface IDamageable
 
 public interface IInteractable
 {
-    void HighlightText();
-    void UnhighlightText();
+    void OpenInteractionText();
+    void CloseInteractionText();
+    void Interact();
 }

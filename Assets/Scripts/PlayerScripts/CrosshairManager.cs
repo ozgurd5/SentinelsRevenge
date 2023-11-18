@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,8 +17,8 @@ public class CrosshairManager : MonoBehaviour
     public float distanceToHitTarget;
 
     public IDamageable damagable;
-    private IInteractable previousInteractable;
-    private IInteractable interactable;
+    public IInteractable interactable;
+    public IInteractable previousInteractable;
 
     private PlayerStateData psd;
     private PlayerExtensionData ped;
@@ -73,39 +74,36 @@ public class CrosshairManager : MonoBehaviour
 
             if (distanceToHitTarget < meleeAttackRange)
             {
-                interactable = crosshairHit.collider.GetComponent<IInteractable>();
-                canInteract = interactable != null;
+                canInteract = crosshairHit.collider.CompareTag("Interactable");
+                if (canInteract)
+                {
+                    interactable = crosshairHit.collider.GetComponentInChildren<IInteractable>();
+                    previousInteractable = interactable;
+                }
 
-                damagable = crosshairHit.collider.GetComponent<IDamageable>();
-                canMeleeAttack = damagable != null;
-
-                damagable = crosshairHit.collider.GetComponent<IDamageable>();
-                canRangedAttack = damagable != null;
+                canMeleeAttack = crosshairHit.collider.CompareTag("Enemy");
+                if (canMeleeAttack) damagable = crosshairHit.collider.GetComponent<IDamageable>();
             }
 
             else if (distanceToHitTarget < interactRange)
             {
-                interactable = crosshairHit.collider.GetComponent<IInteractable>();
-                canInteract = interactable != null;
+                canInteract = crosshairHit.collider.CompareTag("Interactable");
+                if (canInteract)
+                {
+                    interactable = crosshairHit.collider.GetComponentInChildren<IInteractable>();
+                    previousInteractable = interactable;
+                }
 
-                damagable = crosshairHit.collider.GetComponent<IDamageable>();
-                canRangedAttack = damagable != null;
+                canRangedAttack = crosshairHit.collider.CompareTag("Enemy");
+                if (canRangedAttack) damagable = crosshairHit.collider.GetComponent<IDamageable>();
             }
 
             else if (distanceToHitTarget < rangeAttackRange)
             {
-                damagable = crosshairHit.collider.GetComponent<IDamageable>();
-                canRangedAttack = damagable != null;
+                canRangedAttack = crosshairHit.collider.CompareTag("Enemy");
+                if (canRangedAttack) damagable = crosshairHit.collider.GetComponent<IDamageable>();
             }
         }
-
-        //TODO: SHOULD THIS LOGIC BE HERE?
-        if (canInteract)
-        {
-            previousInteractable = interactable;
-            interactable.HighlightText();
-        }
-        else previousInteractable?.UnhighlightText();
     }
 
     private void HandleCrosshairColor()
