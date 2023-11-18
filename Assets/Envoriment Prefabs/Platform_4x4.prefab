@@ -394,8 +394,8 @@ Light:
   m_Type: 3
   m_Shape: 0
   m_Color: {r: 0, g: 1, b: 0.49019608, a: 1}
-  m_Intensity: 40
-  m_Range: 2
+  m_Intensity: 59.6
+  m_Range: 1
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
