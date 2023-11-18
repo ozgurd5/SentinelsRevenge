@@ -9,11 +9,13 @@ public class PlayerInputManager : MonoBehaviour
     [Header("Info - No Touch")]
     public Vector2 lookInput;
     public Vector2 moveInput;
-    public bool isRunKeyDown;
-    public bool isRunKey;
-    public bool isRunKeyUp;
     public bool isJumpKeyDown;
-    //public bool isDashKeyDown;
+    public bool isRunKey;
+    public bool isRunKeyDown;
+    public bool isRunKeyUp;
+    public bool isAimKeyDown;
+    public bool isAimKeyUp;
+    public bool isAttackKeyDown;
 
     private void Awake()
     {
@@ -26,13 +28,17 @@ public class PlayerInputManager : MonoBehaviour
     private void Update()
     {
         lookInput = pia.Default.Look.ReadValue<Vector2>() * sensitivity;
+        lookInput.y *= -1; //Fixes y axis inversion
         moveInput = pia.Default.Movement.ReadValue<Vector2>();
 
-        isRunKeyDown = pia.Default.Run.WasPressedThisFrame();
+        isJumpKeyDown = pia.Default.Jump.WasPressedThisFrame();
+
         isRunKey = pia.Default.Run.IsPressed();
+        isRunKeyDown = pia.Default.Run.WasPressedThisFrame();
         isRunKeyUp = pia.Default.Run.WasReleasedThisFrame();
 
-        isJumpKeyDown = pia.Default.Jump.WasPressedThisFrame();
-        //isDashKeyDown = pia.Default.Dash.WasPressedThisFrame();
+        isAimKeyDown = pia.Default.Aim.WasPressedThisFrame();
+        isAimKeyUp = pia.Default.Aim.WasReleasedThisFrame();
+        isAttackKeyDown = pia.Default.Attack.WasPressedThisFrame();
     }
 }

@@ -42,9 +42,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Dash",
+                    "name": "Aim",
                     "type": "Button",
-                    "id": "692d90a8-c11e-48d3-9081-1761b84068e9",
+                    "id": "49f5be36-8f6a-4629-9a22-a9cde1fb36fd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Attack",
+                    "type": "Button",
+                    "id": "ba300f42-334f-4509-8d14-b38ed42ed456",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -142,12 +151,23 @@
                 },
                 {
                     "name": "",
-                    "id": "30ae7beb-6d4c-40b2-ae45-934a80c51637",
-                    "path": "<Keyboard>/space",
+                    "id": "43ced766-7d6c-4946-ab66-2523899d790b",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Dash",
+                    "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f27436a2-8879-4943-bf1e-b9aa1aaf04bb",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

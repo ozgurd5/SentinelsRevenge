@@ -10,7 +10,9 @@ public class PlayerStateData : MonoBehaviour
     public bool isRunning;
     public bool isGrounded;
     public bool isJumping;
-    public bool isDashing;
+    public bool isMeleeAttacking;
+    public bool isAiming;
+    public bool isRangedAttacking;
 
     public enum PlayerMainState
     {

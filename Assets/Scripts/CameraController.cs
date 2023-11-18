@@ -20,8 +20,8 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float aimFovValue = 20f;
     [SerializeField] private float runningFovValue = 50f;
 
-    private PlayerInputManager pim;
     private PlayerStateData psd;
+    private PlayerInputManager pim;
     private CinemachineVirtualCamera cam;
     private IEnumerator fovChangingRoutine;
 
@@ -30,8 +30,8 @@ public class CameraController : MonoBehaviour
 
     private void Awake()
     {
-        pim = GameObject.Find("Player").GetComponent<PlayerInputManager>();
-        psd = pim.GetComponent<PlayerStateData>();
+        psd = GameObject.Find("Player").GetComponent<PlayerStateData>();
+        pim = psd.GetComponent<PlayerInputManager>();
         cam = GetComponent<CinemachineVirtualCamera>();
 
         //Default values
