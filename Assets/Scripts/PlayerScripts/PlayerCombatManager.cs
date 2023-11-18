@@ -3,31 +3,35 @@ using UnityEngine;
 
 public class PlayerCombatManager : MonoBehaviour
 {
-    [Header("Assign - Durations")]
+    [Header("Assign")]
     [SerializeField] private float meleeAttackAnimationTime = 0.8f;
     [SerializeField] private float rangedAttackAnimationTime;
     [SerializeField] private float rangedAttackCooldownTime;
     [SerializeField] private float aimModeSensitivityModifier = 0.5f;
 
-    private PlayerInputManager pim;
+    private PlayerExtensionData ped;
     private PlayerStateData psd;
+    private PlayerInputManager pim;
     private CameraController cameraController;
 
     private bool isRangedAttackCooldownOver = true;
 
     private void Awake()
     {
-        pim = GetComponent<PlayerInputManager>();
+        ped = GetComponent<PlayerExtensionData>();
         psd = GetComponent<PlayerStateData>();
+        pim = GetComponent<PlayerInputManager>();
         cameraController = GameObject.Find("PlayerCamera").GetComponent<CameraController>();
     }
 
     private void Update()
     {
-        if (pim.isAimKeyDown || pim.isAimKeyUp) ToggleAim();
+        //TODO: MORE UNDERSTANDABLE IF STATEMENTS
+
+        if (ped.hasGun && (pim.isAimKeyDown || pim.isAimKeyUp)) ToggleAim();
 
         if (psd.isAiming && pim.isAttackKeyDown && !psd.isRangedAttacking && isRangedAttackCooldownOver) RangedAttack();
-        else if (!psd.isAiming && pim.isAttackKeyDown && !psd.isMeleeAttacking) MeleeAttack();
+        else if (ped.hasArms && !psd.isAiming && pim.isAttackKeyDown && !psd.isMeleeAttacking) MeleeAttack();
     }
 
     private void ToggleAim()
@@ -44,11 +48,6 @@ public class PlayerCombatManager : MonoBehaviour
             cameraController.ChangeCameraFov(CameraController.FovMode.DefaultFov);
             psd.isAiming = false;
             PlayerInputManager.sensitivity /= aimModeSensitivityModifier;
-
-            //When the player is aiming, character looks at aiming position. When character is not moving it's looking the last looking position so..
-            //..when the player stop aiming while looking up or down, character stays looking that direction if it's not moving. That's ugly and..
-            //..must not happen. This line prevents it.
-            transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, transform.eulerAngles.z);
         }
     }
 

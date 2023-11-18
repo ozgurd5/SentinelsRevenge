@@ -16,24 +16,25 @@ public class CrosshairManager : MonoBehaviour
     public float distanceToHitTarget;
 
     public IDamageable damagable;
-    public IInteractable interactable;
+    private IInteractable previousInteractable;
+    private IInteractable interactable;
 
-    private Camera cam;
     private PlayerStateData psd;
+    private PlayerExtensionData ped;
+    private Camera cam;
     private Image crosshairImage;
 
-    public RaycastHit crosshairHit;
+    private RaycastHit crosshairHit;
     private Ray crosshairRay;
     private int layerMask = ~(1 << 7); //evil bit hack
 
     private Color temporaryColor;
 
-    [Header("Debug Info")] [SerializeField] private GameObject lookingTarget;
-
     private void Awake()
     {
-        cam = Camera.main;
         psd = GetComponent<PlayerStateData>();
+        ped = GetComponent<PlayerExtensionData>();
+        cam = Camera.main;
         crosshairImage = GetComponentInChildren<Image>();
 
         //Default value
@@ -49,10 +50,12 @@ public class CrosshairManager : MonoBehaviour
         CastRays();
         HandleCrosshairColor();
 
-        //DEBUG
-        if (crosshairHit.collider != null) lookingTarget = crosshairHit.collider.gameObject;
+        #if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.G)) Debug.Log(crosshairHit.collider.gameObject.name);
+        #endif
     }
 
+    //TODO: MORE FLEXIBLE CODE
     private void CastRays()
     {
         crosshairRay = cam.ScreenPointToRay(crosshairImage.rectTransform.position);
@@ -95,6 +98,14 @@ public class CrosshairManager : MonoBehaviour
                 canRangedAttack = damagable != null;
             }
         }
+
+        //TODO: SHOULD THIS LOGIC BE HERE?
+        if (canInteract)
+        {
+            previousInteractable = interactable;
+            interactable.HighlightText();
+        }
+        else previousInteractable?.UnhighlightText();
     }
 
     private void HandleCrosshairColor()
@@ -105,7 +116,7 @@ public class CrosshairManager : MonoBehaviour
 
         temporaryColor = Color.white;
 
-        if (canMeleeAttack)
+        if (canMeleeAttack && ped.hasArms)
         {
             temporaryColor = Color.red;
             temporaryColor.a = 1f;

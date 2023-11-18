@@ -64,15 +64,6 @@ public partial class @RobotInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Dash"",
-                    ""type"": ""Button"",
-                    ""id"": ""692d90a8-c11e-48d3-9081-1761b84068e9"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Aim"",
                     ""type"": ""Button"",
                     ""id"": ""49f5be36-8f6a-4629-9a22-a9cde1fb36fd"",
@@ -182,17 +173,6 @@ public partial class @RobotInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""30ae7beb-6d4c-40b2-ae45-934a80c51637"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Dash"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""43ced766-7d6c-4946-ab66-2523899d790b"",
                     ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
@@ -224,7 +204,6 @@ public partial class @RobotInputActions: IInputActionCollection2, IDisposable
         m_Default_Look = m_Default.FindAction("Look", throwIfNotFound: true);
         m_Default_Run = m_Default.FindAction("Run", throwIfNotFound: true);
         m_Default_Jump = m_Default.FindAction("Jump", throwIfNotFound: true);
-        m_Default_Dash = m_Default.FindAction("Dash", throwIfNotFound: true);
         m_Default_Aim = m_Default.FindAction("Aim", throwIfNotFound: true);
         m_Default_Attack = m_Default.FindAction("Attack", throwIfNotFound: true);
     }
@@ -292,7 +271,6 @@ public partial class @RobotInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Default_Look;
     private readonly InputAction m_Default_Run;
     private readonly InputAction m_Default_Jump;
-    private readonly InputAction m_Default_Dash;
     private readonly InputAction m_Default_Aim;
     private readonly InputAction m_Default_Attack;
     public struct DefaultActions
@@ -303,7 +281,6 @@ public partial class @RobotInputActions: IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_Default_Look;
         public InputAction @Run => m_Wrapper.m_Default_Run;
         public InputAction @Jump => m_Wrapper.m_Default_Jump;
-        public InputAction @Dash => m_Wrapper.m_Default_Dash;
         public InputAction @Aim => m_Wrapper.m_Default_Aim;
         public InputAction @Attack => m_Wrapper.m_Default_Attack;
         public InputActionMap Get() { return m_Wrapper.m_Default; }
@@ -327,9 +304,6 @@ public partial class @RobotInputActions: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
-            @Dash.started += instance.OnDash;
-            @Dash.performed += instance.OnDash;
-            @Dash.canceled += instance.OnDash;
             @Aim.started += instance.OnAim;
             @Aim.performed += instance.OnAim;
             @Aim.canceled += instance.OnAim;
@@ -352,9 +326,6 @@ public partial class @RobotInputActions: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
-            @Dash.started -= instance.OnDash;
-            @Dash.performed -= instance.OnDash;
-            @Dash.canceled -= instance.OnDash;
             @Aim.started -= instance.OnAim;
             @Aim.performed -= instance.OnAim;
             @Aim.canceled -= instance.OnAim;
@@ -384,7 +355,6 @@ public partial class @RobotInputActions: IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
-        void OnDash(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
     }

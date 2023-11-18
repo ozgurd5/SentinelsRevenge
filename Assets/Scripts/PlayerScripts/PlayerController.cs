@@ -12,11 +12,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float acceleration = 5f;
     [SerializeField] private float deceleration = 10f;
 
+    private Vector3 movingDirection;
     private float movingSpeed;
 
     private Rigidbody rb;
-    private PlayerInputManager pim;
     private PlayerStateData psd;
+    private PlayerInputManager pim;
 
     private CameraController cameraController;
     private Transform cameraTransform;
@@ -24,8 +25,8 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        pim = GetComponent<PlayerInputManager>();
         psd = GetComponent<PlayerStateData>();
+        pim = GetComponent<PlayerInputManager>();
 
         cameraController = GameObject.Find("PlayerCamera").GetComponent<CameraController>();
         cameraTransform = cameraController.transform;
@@ -41,6 +42,7 @@ public class PlayerController : MonoBehaviour
         DecideIdleOrMoving();
         DecideWalkingOrRunning();
 
+        HandleRotation();
         HandleJump();
     }
 
@@ -92,14 +94,22 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMovement()
     {
-        Vector3 movingDirection = cameraTransform.right * pim.moveInput.x + cameraTransform.forward * pim.moveInput.y;
+        movingDirection = cameraTransform.right * pim.moveInput.x + cameraTransform.forward * pim.moveInput.y;
         movingDirection.y = 0f;
         movingDirection *= movingSpeed;
 
-        if (psd.isAiming) transform.forward = Vector3.Slerp(transform.forward, cameraTransform.forward, rotatingSpeed * 2);
-        else if (psd.isMoving) transform.forward = Vector3.Slerp(transform.forward, movingDirection, rotatingSpeed);
-
         rb.velocity = new Vector3(movingDirection.x, rb.velocity.y, movingDirection.z);
+    }
+
+    private void HandleRotation()
+    {
+        if (psd.isAiming || psd.isMeleeAttacking)
+        {
+            transform.forward = Vector3.Slerp(transform.forward, cameraTransform.forward, rotatingSpeed * 2);
+            transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, transform.eulerAngles.z);
+        }
+
+        else if (psd.isMoving) transform.forward = Vector3.Slerp(transform.forward, movingDirection, rotatingSpeed);
     }
 
     private void StopSpeedCoroutines()
