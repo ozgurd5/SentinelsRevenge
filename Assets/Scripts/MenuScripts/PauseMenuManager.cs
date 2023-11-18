@@ -40,11 +40,15 @@ public class PauseMenuManager : MenuManager
         Cursor.lockState = CursorLockMode.Locked;
 
         psd.playerMainState = previousPlayerMainState;
+        
+        mainScreen.SetActive(true);
+        settingsScreen.SetActive(false);
+        creditsScreen.SetActive(false);
     }
 
     private void PauseGame()
     {
-        isGamePaused = false;
+        isGamePaused = true;
         canvas.enabled = true;
 
         Time.timeScale = 0f;

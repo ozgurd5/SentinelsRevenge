@@ -42,7 +42,7 @@ public class MenuManager : MonoBehaviour
         if (startButton != null) startButton.onClick.AddListener(OnStartButton);
         settingsButton.onClick.AddListener(OnSettingButton);
         creditsButton.onClick.AddListener(OnCreditsButton);
-        if (quitButton != null) quitButton.onClick.AddListener(Application.Quit);
+        quitButton.onClick.AddListener(Application.Quit);
 
         backFromSettingsButton.onClick.AddListener(BackToMainScreen);
         backFromCreditsButton.onClick.AddListener(BackToMainScreen);
