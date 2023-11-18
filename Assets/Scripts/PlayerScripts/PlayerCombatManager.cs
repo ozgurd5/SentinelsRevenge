@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerCombatManager : MonoBehaviour
 {
-    [Header("Assign")]
+    [Header("Assign - Durations")]
     [SerializeField] private float meleeAttackAnimationTime = 0.8f;
     [SerializeField] private float rangedAttackAnimationTime;
     [SerializeField] private float rangedAttackCooldownTime;

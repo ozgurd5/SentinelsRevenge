@@ -29,6 +29,7 @@ public class PlayerInputManager : MonoBehaviour
     private void Update()
     {
         lookInput = pia.Default.Look.ReadValue<Vector2>() * sensitivity;
+        lookInput.y *= -1;
         moveInput = pia.Default.Movement.ReadValue<Vector2>();
 
         isRunKey = pia.Default.Run.IsPressed();
