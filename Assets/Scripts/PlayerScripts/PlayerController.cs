@@ -36,6 +36,8 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (psd.playerMainState != PlayerStateData.PlayerMainState.Normal) return;
+
         DecideIdleOrMoving();
         DecideWalkingOrRunning();
 
@@ -44,6 +46,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (psd.playerMainState != PlayerStateData.PlayerMainState.Normal) return;
+
         HandleMovement();
     }
 

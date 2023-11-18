@@ -1,47 +1,48 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MainMenuManager : MonoBehaviour
+public class MenuManager : MonoBehaviour
 {
     [Header("Assign - Screens")]
-    [SerializeField] private GameObject mainScreen;
-    [SerializeField] private GameObject settingsScreen;
-    [SerializeField] private GameObject creditsScreen;
+    [SerializeField] protected GameObject mainScreen;
+    [SerializeField] protected GameObject settingsScreen;
+    [SerializeField] protected GameObject creditsScreen;
 
     [Header("Assign - Main Screen Buttons")]
-    [SerializeField] private Button startButton;
-    [SerializeField] private Button settingsButton;
-    [SerializeField] private Button creditsButton;
-    [SerializeField] private Button quitButton;
+    [SerializeField] protected Button continueButton;
+    [SerializeField] protected Button startButton;
+    [SerializeField] protected Button settingsButton;
+    [SerializeField] protected Button creditsButton;
+    [SerializeField] protected Button quitButton;
 
     [Header("Assign - Back Buttons")]
-    [SerializeField] private Button backFromSettingsButton;
-    [SerializeField] private Button backFromCreditsButton;
+    [SerializeField] protected Button backFromSettingsButton;
+    [SerializeField] protected Button backFromCreditsButton;
 
     [Header("Assign - Settings Sliders")]
-    [SerializeField] private Slider masterAudioSlider;
-    [SerializeField] private Slider sfxSlider;
-    [SerializeField] private Slider musicSlider;
-    [SerializeField] private Slider sensitivitySlider;
+    [SerializeField] protected Slider masterAudioSlider;
+    [SerializeField] protected Slider sfxSlider;
+    [SerializeField] protected Slider musicSlider;
+    [SerializeField] protected Slider sensitivitySlider;
 
     [Header("Assign - Settings Texts")]
-    [SerializeField] private TextMeshProUGUI masterAudioValueText;
-    [SerializeField] private TextMeshProUGUI sfxValueText;
-    [SerializeField] private TextMeshProUGUI musicValueText;
-    [SerializeField] private TextMeshProUGUI sensitivityValueText;
+    [SerializeField] protected TextMeshProUGUI masterAudioValueText;
+    [SerializeField] protected TextMeshProUGUI sfxValueText;
+    [SerializeField] protected TextMeshProUGUI musicValueText;
+    [SerializeField] protected TextMeshProUGUI sensitivityValueText;
 
-    [Header("Assign - Audio Mixer")] [SerializeField] private AudioMixer audioMixer;
+    [Header("Assign - Audio Mixer")] [SerializeField] protected AudioMixer audioMixer;
 
-    private void Awake()
+    protected void OnAwake()
     {
-        startButton.onClick.AddListener(OnStartButton);
+        if (continueButton != null) continueButton.onClick.AddListener(OnContinueButton);
+        if (startButton != null) startButton.onClick.AddListener(OnStartButton);
         settingsButton.onClick.AddListener(OnSettingButton);
         creditsButton.onClick.AddListener(OnCreditsButton);
-        quitButton.onClick.AddListener(Application.Quit);
+        if (quitButton != null) quitButton.onClick.AddListener(Application.Quit);
 
         backFromSettingsButton.onClick.AddListener(BackToMainScreen);
         backFromCreditsButton.onClick.AddListener(BackToMainScreen);
@@ -71,6 +72,8 @@ public class MainMenuManager : MonoBehaviour
     }
 
     //TODO: BUTTON SOUNDS
+
+    protected virtual void OnContinueButton() { }
 
     private void OnStartButton()
     {

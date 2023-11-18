@@ -11,7 +11,6 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Vector3 followOffset;
 
     [Header("Control")]
-    [SerializeField] private PlayerInputManager pim;
     [SerializeField] private float cameraMinYDistance = 1f;
     [SerializeField] private float cameraMaxYDistance = 6f;
 
@@ -21,6 +20,8 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float aimFovValue = 20f;
     [SerializeField] private float runningFovValue = 50f;
 
+    private PlayerInputManager pim;
+    private PlayerStateData psd;
     private CinemachineVirtualCamera cam;
     private IEnumerator fovChangingRoutine;
 
@@ -29,6 +30,8 @@ public class CameraController : MonoBehaviour
 
     private void Awake()
     {
+        pim = GameObject.Find("Player").GetComponent<PlayerInputManager>();
+        psd = pim.GetComponent<PlayerStateData>();
         cam = GetComponent<CinemachineVirtualCamera>();
 
         //Default values
@@ -39,6 +42,8 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (psd.playerMainState != PlayerStateData.PlayerMainState.Normal) return;
+
         followTargetPositionDifference = followTargetTransform.position - followTargetPreviousPosition;
         transform.position += followTargetPositionDifference;
         followTargetPreviousPosition = followTargetTransform.position;
