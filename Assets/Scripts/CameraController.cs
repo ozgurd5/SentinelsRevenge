@@ -42,7 +42,7 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (psd.playerMainState != PlayerStateData.PlayerMainState.Normal) return;
+        if (psd.playerMainState is not (PlayerStateData.PlayerMainState.Normal or PlayerStateData.PlayerMainState.ScriptedEvent)) return;
 
         followTargetPositionDifference = followTargetTransform.position - followTargetPreviousPosition;
         transform.position += followTargetPositionDifference;

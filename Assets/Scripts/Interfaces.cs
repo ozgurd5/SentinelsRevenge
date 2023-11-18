@@ -7,5 +7,7 @@ public interface IInteractable
 {
     void OpenInteractionText();
     void CloseInteractionText();
+
+    //This is stupid 1/4 -> InteractableManager.cs
     void Interact();
 }

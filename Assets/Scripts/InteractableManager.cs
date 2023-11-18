@@ -5,10 +5,16 @@ public class InteractableManager : MonoBehaviour, IInteractable
     private Canvas canvas;
     private bool isHighlighted;
 
+    //This is stupid 2/4
+    private CollectibleManager cm;
+
     private void Awake()
     {
         canvas = GetComponentInChildren<Canvas>();
         canvas.worldCamera = Camera.main;
+
+        //This is stupid 3/4
+        cm = GetComponentInParent<CollectibleManager>();
     }
 
     public void OpenInteractionText()
@@ -17,7 +23,6 @@ public class InteractableManager : MonoBehaviour, IInteractable
 
         canvas.enabled = true;
         isHighlighted = true;
-        Debug.Log("highlight text: " + name);
     }
 
     public void CloseInteractionText()
@@ -26,11 +31,11 @@ public class InteractableManager : MonoBehaviour, IInteractable
 
         canvas.enabled = false;
         isHighlighted = false;
-        Debug.Log("unhighlight text: " + name);
     }
 
+    //This is stupid 4/4
     public void Interact()
     {
-        
+        cm.Collect();
     }
 }

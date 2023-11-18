@@ -75,13 +75,14 @@ GameObject:
   - component: {fileID: 6511168079119237587}
   - component: {fileID: 8511399483142797830}
   - component: {fileID: 9139258696725868864}
-  - component: {fileID: 5976351655280556049}
-  - component: {fileID: 1230393269438895690}
   - component: {fileID: 6211230210127535440}
-  - component: {fileID: 4808326070808481119}
+  - component: {fileID: 1230393269438895690}
+  - component: {fileID: 5976351655280556049}
   - component: {fileID: 3854225486720212209}
-  - component: {fileID: 6377132127565248990}
   - component: {fileID: 2347515859340556176}
+  - component: {fileID: 4306801996967259072}
+  - component: {fileID: 6377132127565248990}
+  - component: {fileID: 4808326070808481119}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -169,45 +170,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2875fbb3a253e404c8a2c295c1adb3bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5976351655280556049
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1125266934863235999}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a15f2c72f1e4f4a459c5aca44211d8f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkingSpeed: 5
-  runningSpeed: 8
-  jumpSpeed: 10
-  rotatingSpeed: 0.1
-  acceleration: 5
-  deceleration: 10
---- !u!114 &1230393269438895690
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1125266934863235999}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af0ca3092e387fa4d9e7d431e4fd3f25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lookInput: {x: 0, y: 0}
-  moveInput: {x: 0, y: 0}
-  isJumpKeyDown: 0
-  isRunKey: 0
-  isRunKeyDown: 0
-  isRunKeyUp: 0
-  isAimKeyDown: 0
-  isAimKeyUp: 0
-  isAttackKeyDown: 0
 --- !u!114 &6211230210127535440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,7 +192,7 @@ MonoBehaviour:
   isMeleeAttacking: 0
   isAiming: 0
   isRangedAttacking: 0
---- !u!114 &4808326070808481119
+--- !u!114 &1230393269438895690
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -239,10 +201,37 @@ MonoBehaviour:
   m_GameObject: {fileID: 1125266934863235999}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf21e11c73f54254e8addc4677610e90, type: 3}
+  m_Script: {fileID: 11500000, guid: af0ca3092e387fa4d9e7d431e4fd3f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  extraGravity: 10
+  lookInput: {x: 0, y: 0}
+  moveInput: {x: 0, y: 0}
+  isJumpKeyDown: 0
+  isRunKey: 0
+  isRunKeyDown: 0
+  isRunKeyUp: 0
+  isAimKeyDown: 0
+  isAimKeyUp: 0
+  isAttackKeyDown: 0
+  isInteractKeyDown: 0
+--- !u!114 &5976351655280556049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125266934863235999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a15f2c72f1e4f4a459c5aca44211d8f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkingSpeed: 5
+  runningSpeed: 8
+  jumpSpeed: 10
+  rotatingSpeed: 0.1
+  acceleration: 5
+  deceleration: 10
 --- !u!114 &3854225486720212209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,21 +246,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rangedAttackAnimationMovingAmount: 20
   rangedAttackAnimationHalfDuration: 0.2
---- !u!114 &6377132127565248990
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1125266934863235999}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0eaee1930df2fe41bbbace8418a51b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  meleeAttackAnimationTime: 0.8
-  rangedAttackCooldownTime: 1
-  aimModeSensitivityModifier: 0.5
 --- !u!114 &2347515859340556176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,6 +266,46 @@ MonoBehaviour:
   canMeleeAttack: 0
   canRangedAttack: 0
   distanceToHitTarget: 0
+--- !u!114 &4306801996967259072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125266934863235999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0c70ca84194221429b2db87369c938a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6377132127565248990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125266934863235999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0eaee1930df2fe41bbbace8418a51b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meleeAttackAnimationTime: 0.8
+  rangedAttackCooldownTime: 1
+  aimModeSensitivityModifier: 0.5
+--- !u!114 &4808326070808481119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125266934863235999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf21e11c73f54254e8addc4677610e90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  extraGravity: 10
 --- !u!1 &1270604792320401015
 GameObject:
   m_ObjectHideFlags: 0

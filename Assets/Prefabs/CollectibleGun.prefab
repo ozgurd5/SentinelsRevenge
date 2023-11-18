@@ -74,6 +74,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7774860979568394122}
   - component: {fileID: 1218104330691607472}
+  - component: {fileID: 6984318811824365060}
   m_Layer: 0
   m_Name: CollectibleGun
   m_TagString: Interactable
@@ -94,7 +95,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1184537790385748335}
+  - {fileID: 3177196890114061942}
   - {fileID: 6070683893359755733}
   - {fileID: 6467488940665720089}
   m_Father: {fileID: 0}
@@ -120,6 +121,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.3, y: 0.35, z: 1.25}
   m_Center: {x: 0, y: 0.8, z: 0.2}
+--- !u!114 &6984318811824365060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5014485862555518965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54601c20a040a7344ba6561601e93284, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fixingRotationTime: 1
+  goingUpTime: 1
+  goingUpDistance: 1
+  approachingPlayerTime: 1
 --- !u!1 &5217173704318125415
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,7 +412,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbdd4942cd56acb43a358f4f5b68c820, type: 3}
---- !u!224 &1184537790385748335 stripped
+--- !u!224 &3177196890114061942 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3284374218613696168, guid: fbdd4942cd56acb43a358f4f5b68c820,
     type: 3}

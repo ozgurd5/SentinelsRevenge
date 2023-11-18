@@ -16,6 +16,8 @@ public class PlayerInteractionManager : MonoBehaviour
     private void Update()
     {
         HandleInteractionText();
+
+        if (cm.canInteract && pim.isInteractKeyDown) cm.interactable.Interact();
     }
 
     private void HandleInteractionText()

@@ -17,6 +17,7 @@ public class PlayerStateData : MonoBehaviour
     public enum PlayerMainState
     {
         Normal,
-        Paused
+        Paused,
+        ScriptedEvent
     }
 }
