@@ -78,6 +78,7 @@ GameObject:
   - component: {fileID: 6211230210127535440}
   - component: {fileID: 4808326070808481119}
   - component: {fileID: 3854225486720212209}
+  - component: {fileID: 6377132127565248990}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -93,7 +94,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1125266934863235999}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.605, y: 1.575, z: -4.705}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -167,6 +168,12 @@ MonoBehaviour:
   isRunKey: 0
   isRunKeyUp: 0
   isJumpKeyDown: 0
+  isAimKey: 0
+  isAimKeyDown: 0
+  isAimKeyUp: 0
+  isAttackKey: 0
+  isAttackKeyDown: 0
+  isAttackKeyUp: 0
 --- !u!114 &6211230210127535440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,6 +194,9 @@ MonoBehaviour:
   isGrounded: 0
   isJumping: 0
   isDashing: 0
+  isMeleeAttacking: 0
+  isAiming: 0
+  isRangedAttacking: 0
 --- !u!114 &4808326070808481119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -212,10 +222,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8081b3c2d8164e34b93501df5b88affb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  psd: {fileID: 0}
-  headAnimator: {fileID: 0}
-  armsAnimator: {fileID: 0}
-  gunAnimator: {fileID: 0}
+--- !u!114 &6377132127565248990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125266934863235999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0eaee1930df2fe41bbbace8418a51b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meleeAttackAnimationTime: 0.8
+  rangedAttackAnimationTime: 1
+  rangedAttackCooldownTime: 2
+  num: 2
 --- !u!1 &1270604792320401015
 GameObject:
   m_ObjectHideFlags: 0
@@ -1417,7 +1439,7 @@ Transform:
   m_GameObject: {fileID: 8165259905191630117}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.914, z: 0}
+  m_LocalPosition: {x: 0, y: 1.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

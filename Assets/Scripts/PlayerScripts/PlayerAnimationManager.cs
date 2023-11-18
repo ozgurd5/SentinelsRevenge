@@ -17,7 +17,9 @@ public class PlayerAnimationManager : MonoBehaviour
 
     private void Update()
     {
-        if (psd.isIdle) PlayAnimation("Idle");
+        if (psd.isMeleeAttacking) PlayAnimation("MeleeAttack");
+        else if (psd.isRangedAttacking) PlayAnimation("RangedAttack");
+        else if (psd.isIdle) PlayAnimation("Idle");
         else if (psd.isWalking) PlayAnimation("Walk");
         else if (psd.isRunning) PlayAnimation("Run");
     }

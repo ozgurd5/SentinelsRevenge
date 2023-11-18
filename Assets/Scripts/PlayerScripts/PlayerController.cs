@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
         psd.isWalking = !psd.isRunning;
 
         //Walking to running
-        if (pim.isRunKeyDown)
+        if (pim.isRunKeyDown && !psd.isAiming)
         {
             StopSpeedCoroutines();
             StartCoroutine(ChangeSpeed(true, runningSpeed));
@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //Running to walking
-        else if (pim.isRunKeyUp)
+        else if (pim.isRunKeyUp && !psd.isAiming)
         {
             StopSpeedCoroutines();
             StartCoroutine(ChangeSpeed(false, walkingSpeed));
@@ -96,7 +96,8 @@ public class PlayerController : MonoBehaviour
         movingDirection.y = 0f;
         movingDirection *= movingSpeed;
 
-        if (psd.isMoving) transform.forward = Vector3.Slerp(transform.forward, movingDirection, rotatingSpeed);
+        if (psd.isAiming) transform.forward = Vector3.Slerp(transform.forward, cameraTransform.forward, rotatingSpeed * 2);
+        else if (psd.isMoving) transform.forward = Vector3.Slerp(transform.forward, movingDirection, rotatingSpeed);
 
         rb.velocity = new Vector3(movingDirection.x, rb.velocity.y, movingDirection.z);
     }
