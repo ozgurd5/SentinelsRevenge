@@ -255,6 +255,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8081b3c2d8164e34b93501df5b88affb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rangedAttackAnimationMovingAmount: 20
+  rangedAttackAnimationHalfDuration: 0.2
 --- !u!114 &6377132127565248990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,8 +270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meleeAttackAnimationTime: 0.8
-  rangedAttackAnimationTime: 1
-  rangedAttackCooldownTime: 2
+  rangedAttackCooldownTime: 1
   aimModeSensitivityModifier: 0.5
 --- !u!114 &2347515859340556176
 MonoBehaviour:
@@ -460,7 +461,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7460527610721315769
 Transform:
   m_ObjectHideFlags: 0
@@ -1383,7 +1384,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1552962339943870298
 Transform:
   m_ObjectHideFlags: 0

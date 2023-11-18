@@ -103,6 +103,8 @@ public class PlayerController : MonoBehaviour
 
     private void HandleRotation()
     {
+        if (psd.isRangedAttacking) return;
+
         if (psd.isAiming || psd.isMeleeAttacking)
         {
             transform.forward = Vector3.Slerp(transform.forward, cameraTransform.forward, rotatingSpeed * 2);
