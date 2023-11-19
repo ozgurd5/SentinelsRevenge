@@ -340,11 +340,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   damage: 0
+  attackAnimationPrepareTime: 0
   attackAnimationTime: 1
   attackCooldownTime: 2
   knockBackAmount: 2
   chasingKnockBackModifier: 200
   knockBackDuration: 0.2
+  isTier3: 1
+  tier3AttackAnimationPrePrepareTime: 0.5
 --- !u!195 &7134517887633574694
 NavMeshAgent:
   m_ObjectHideFlags: 0

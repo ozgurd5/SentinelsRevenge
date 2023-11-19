@@ -10,14 +10,21 @@ public class EnemyCombatManager : MonoBehaviour, IDamageable
     [SerializeField] private int damage;
 
     [Header("Assign - Attack Animation")]
+    [SerializeField] private float attackAnimationPrepareTime = 0.3f;
     [SerializeField] private float attackAnimationTime = 1f;
     [SerializeField] private float attackCooldownTime = 2f;
     [SerializeField] private float knockBackAmount = 2f;
     [SerializeField] private float chasingKnockBackModifier = 200f;
     [SerializeField] private float knockBackDuration = 0.2f;
 
+    [Header("Assign - Tier 3 Only")]
+    [SerializeField] private bool isTier3;
+    [SerializeField] private float tier3AttackAnimationPrePrepareTime = 0.3f;
+
     private EnemyManager em;
     private NavMeshAgent nma;
+    private IDamageable playerDamageable;
+
     private bool isAttackCooldownOver = true;
 
     public event Action<int> OnDamageTaken;
@@ -26,6 +33,7 @@ public class EnemyCombatManager : MonoBehaviour, IDamageable
     {
         em = GetComponent<EnemyManager>();
         nma = GetComponent<NavMeshAgent>();
+        playerDamageable = GameObject.Find("Player").GetComponent<IDamageable>();
     }
 
     public async void Attack()
@@ -33,9 +41,19 @@ public class EnemyCombatManager : MonoBehaviour, IDamageable
         if (!isAttackCooldownOver) return;
 
         StartAttackCooldown();
-        em.enemyState = EnemyManager.EnemyState.Attacking;
-        await UniTask.WaitForSeconds(attackAnimationTime);
 
+        if (isTier3)
+        {
+            em.enemyState = EnemyManager.EnemyState.Waiting;
+            await UniTask.WaitForSeconds(tier3AttackAnimationPrePrepareTime);
+        }
+
+        em.enemyState = EnemyManager.EnemyState.Attacking;
+
+        await UniTask.WaitForSeconds(attackAnimationPrepareTime);
+        playerDamageable.GetDamage(5, transform.forward);
+
+        await UniTask.WaitForSeconds(attackAnimationTime - attackAnimationPrepareTime);
         em.enemyState = EnemyManager.EnemyState.Walking;
     }
 
@@ -48,8 +66,6 @@ public class EnemyCombatManager : MonoBehaviour, IDamageable
 
     public async void GetDamage(int damageTakenAmount, Vector3 attackerTransformForward)
     {
-        //TODO: STOP ATTACK?
-
         em.enemyState = EnemyManager.EnemyState.Waiting;
 
         nma.SetDestination(transform.position); //Sudden stop

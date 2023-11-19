@@ -1,13 +1,18 @@
+using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class PlayerCombatManager : MonoBehaviour
+public class PlayerCombatManager : MonoBehaviour, IDamageable
 {
     [Header("Assign")]
     [SerializeField] private float punchAttackAnimationPrepareTime = 0.3f;
     [SerializeField] private float punchAttackAnimationTime = 0.8f;
     [SerializeField] private float rangedAttackCooldownTime = 1f;
     [SerializeField] private float aimModeSensitivityModifier = 0.5f;
+    [SerializeField] private float knockBackAmount = 10f;
+    [SerializeField] private float knockBackDuration = 0.2f;
+    [SerializeField] private int health;
+    [SerializeField] private int damage;
 
     private PlayerExtensionData ped;
     private PlayerStateData psd;
@@ -20,6 +25,8 @@ public class PlayerCombatManager : MonoBehaviour
     private float rangedAttackAnimationTime;
     private float meleeAttackAnimationTime;
     private float meleeAttackPrepareTime;
+
+    public event Action<int> OnDamageTaken;
 
     private void Awake()
     {
@@ -98,5 +105,33 @@ public class PlayerCombatManager : MonoBehaviour
         isRangedAttackCooldownOver = false;
         await UniTask.WaitForSeconds(rangedAttackCooldownTime);
         isRangedAttackCooldownOver = true;
+    }
+
+    public async void GetDamage(int damageTakenAmount, Vector3 attackerTransformForward)
+    {
+        health -= damageTakenAmount;
+        OnDamageTaken?.Invoke(health);
+
+        PlayKnockBackAnimation(attackerTransformForward);
+        await UniTask.WaitForSeconds(knockBackDuration);
+
+        //CheckForDeath();
+    }
+
+    //TODO: NO REPETITION
+    private async void PlayKnockBackAnimation(Vector3 attackerTransformForward)
+    {
+        float animationSpeed = knockBackAmount / knockBackDuration;
+        float movingDistance = 0f;
+
+        while (movingDistance < knockBackAmount)
+        {
+            movingDistance += Time.deltaTime * animationSpeed;
+
+            Vector3 tempPosition = transform.position + attackerTransformForward * (Time.deltaTime * animationSpeed);
+            transform.position = tempPosition;
+
+            await UniTask.NextFrame();
+        }
     }
 }
