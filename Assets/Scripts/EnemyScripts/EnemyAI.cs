@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.AI;
-using Random = UnityEngine.Random;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -22,8 +21,9 @@ public class EnemyAI : MonoBehaviour
     private Transform playerTransform;
     private NavMeshAgent navMeshAgent;
     private EnemyManager em;
+    private EnemyCombatManager ecm;
 
-    private int groundLayer = 1 << 6;
+    //private int groundLayer = 1 << 6;
     private int playerLayer = 1 << 7;
 
     private void Awake()
@@ -31,21 +31,12 @@ public class EnemyAI : MonoBehaviour
         playerTransform = GameObject.Find("Player").transform;
         navMeshAgent = GetComponent<NavMeshAgent>();
         em = GetComponent<EnemyManager>();
-    }
-
-    private void Start()
-    {
-        em.enemyState = EnemyManager.EnemyState.Walking;
+        ecm = GetComponent<EnemyCombatManager>();
     }
 
     private void Update()
     {
-        if (em.enemyState == EnemyManager.EnemyState.Dead) return;
-        if (em.enemyState == EnemyManager.EnemyState.GettingDamage)
-        {
-            navMeshAgent.isStopped = true;
-            return;
-        }
+        if (em.enemyState is EnemyManager.EnemyState.Dead or EnemyManager.EnemyState.Waiting) return;
 
         isPlayerInSightRange = Physics.CheckSphere(transform.position, sightRange, playerLayer);
         isPlayerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayer);
@@ -86,7 +77,6 @@ public class EnemyAI : MonoBehaviour
     {
         em.enemyState = EnemyManager.EnemyState.Chasing;
 
-        navMeshAgent.isStopped = false;
         didEncounterPlayer = true;
 
         navMeshAgent.SetDestination(playerTransform.position);
@@ -95,9 +85,9 @@ public class EnemyAI : MonoBehaviour
 
     private void Attack()
     {
-        em.enemyState = EnemyManager.EnemyState.Attacking;
+        ecm.Attack();
 
-        navMeshAgent.isStopped = true;
+        navMeshAgent.SetDestination(transform.position); //Better than navMeshAgent.isStopped = true;
 
         transform.LookAt(playerTransform, Vector3.up);
         transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
@@ -107,7 +97,6 @@ public class EnemyAI : MonoBehaviour
     private void ResetAfterPlayerDeath()
     {
         didEncounterPlayer = false;
-        navMeshAgent.isStopped = false;
     }
 
     private void OnDrawGizmosSelected()

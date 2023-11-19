@@ -1,6 +1,8 @@
+using UnityEngine;
+
 public interface IDamageable
 {
-    public void GetDamage();
+    public void GetDamage(int damageTakenAmount, Vector3 attackerTransformForward);
 }
 
 public interface IInteractable
