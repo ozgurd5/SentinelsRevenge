@@ -19,8 +19,14 @@ public class CheckpointManager : MonoBehaviour
         PlayerCombatManager.OnPlayerDeath += PlayerCombatManager_OnPlayerDeath;
     }
 
+    private void Update()
+    {
+        if(player.transform.position.y < -400f) player.GetComponent<IDamageable>().GetDamage(10, Vector3.down);
+    }
+
     private void PlayerCombatManager_OnPlayerDeath()
     {
         player.transform.position = lastCheckpoint;
     }
+
 }

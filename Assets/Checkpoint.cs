@@ -8,7 +8,8 @@ public class Checkpoint : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.layer == 7)
-        CheckpointManager.instance.lastCheckpoint = transform.position + Vector3.forward*2;
+        CheckpointManager.instance.lastCheckpoint = transform.position + Vector3.right*2;
         //AudioSource.PlayClip();
+        if(particle != null) particle.Play();
     }
 }
