@@ -2,18 +2,30 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    [Header("Assign")]
-    [SerializeField] private int health = 10;
-    [SerializeField] private int damage = 3;
-
+    public EnemyState enemyState;
     public enum EnemyState
     {
         Walking,
         Chasing,
         Attacking,
+        Waiting,
         GettingDamage,
         Dead
     }
 
-    public EnemyState enemyState;
+    private Animator an;
+
+    private void Awake()
+    {
+        an = GetComponent<Animator>();
+    }
+
+    private void Update()
+    {
+        if (enemyState == EnemyState.Walking) an.Play("Walk");
+        else if (enemyState == EnemyState.Chasing) an.Play("Chase");
+        else if (enemyState == EnemyState.Attacking) an.Play("Attack");
+        else if (enemyState == EnemyState.Waiting) an.Play("Wait");
+        else if (enemyState == EnemyState.Dead) an.Play("Death");
+    }
 }

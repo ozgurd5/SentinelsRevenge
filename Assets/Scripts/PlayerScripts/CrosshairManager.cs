@@ -113,7 +113,7 @@ public class CrosshairManager : MonoBehaviour
 
         temporaryColor = Color.white;
 
-        if (canMeleeAttack && ped.hasArms)
+        if (canMeleeAttack)
         {
             temporaryColor = Color.red;
             temporaryColor.a = 1f;

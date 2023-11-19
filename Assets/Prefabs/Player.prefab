@@ -73,7 +73,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7223768695193474631}
   - component: {fileID: 6511168079119237587}
-  - component: {fileID: 8511399483142797830}
   - component: {fileID: 9139258696725868864}
   - component: {fileID: 6211230210127535440}
   - component: {fileID: 1230393269438895690}
@@ -137,27 +136,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!65 &8511399483142797830
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1125266934863235999}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.3, y: 1.1, z: 1.2}
-  m_Center: {x: 0, y: 0.45, z: 0.2}
 --- !u!114 &9139258696725868864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,7 +184,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lookInput: {x: 0, y: 0}
   moveInput: {x: 0, y: 0}
-  isJumpKeyDown: 0
   isRunKey: 0
   isRunKeyDown: 0
   isRunKeyUp: 0
@@ -228,7 +205,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkingSpeed: 5
   runningSpeed: 8
-  jumpSpeed: 10
   rotatingSpeed: 0.1
   acceleration: 5
   deceleration: 10
@@ -245,7 +221,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rangedAttackAnimationMovingAmount: 20
+  headButtAnimationMovingAmount: 1
   rangedAttackAnimationHalfDuration: 0.2
+  headbuttAttackAnimationHalfDuration: 0.2
 --- !u!114 &2347515859340556176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,7 +268,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0eaee1930df2fe41bbbace8418a51b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meleeAttackAnimationTime: 0.8
+  punchAttackAnimationTime: 0.8
   rangedAttackCooldownTime: 1
   aimModeSensitivityModifier: 0.5
 --- !u!114 &4808326070808481119
@@ -469,6 +447,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7460527610721315769}
   - component: {fileID: 598591020303943893}
+  - component: {fileID: 9142005644478821752}
   m_Layer: 7
   m_Name: Arms
   m_TagString: Untagged
@@ -514,6 +493,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &9142005644478821752
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1761963297620842837}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.3, y: 0.7, z: 0.4}
+  m_Center: {x: 0, y: 0.35, z: 0.08}
 --- !u!1 &2171883429333227813
 GameObject:
   m_ObjectHideFlags: 0
@@ -985,6 +985,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2270362321820894525}
   - component: {fileID: 5295315047274657913}
+  - component: {fileID: 5056712119240844716}
   m_Layer: 7
   m_Name: Head
   m_TagString: Untagged
@@ -1030,6 +1031,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &5056712119240844716
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5254052194025061596}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5, y: 1, z: 0.5}
+  m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!1 &5387119097828054280
 GameObject:
   m_ObjectHideFlags: 0
@@ -1392,6 +1414,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1552962339943870298}
   - component: {fileID: 3976659539143948269}
+  - component: {fileID: 6026647692034774520}
   m_Layer: 7
   m_Name: Gun
   m_TagString: Untagged
@@ -1437,6 +1460,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &6026647692034774520
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7120332545665837191}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.3, y: 0.35, z: 1.25}
+  m_Center: {x: 0, y: 0.8, z: 0.2}
 --- !u!1 &7319395931997601541
 GameObject:
   m_ObjectHideFlags: 0
