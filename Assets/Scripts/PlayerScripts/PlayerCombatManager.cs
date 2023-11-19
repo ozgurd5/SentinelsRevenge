@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerCombatManager : MonoBehaviour
 {
     [Header("Assign")]
-    [SerializeField] private float meleeAttackAnimationTime = 0.8f;
+    [SerializeField] private float punchAttackAnimationTime = 0.8f;
     [SerializeField] private float rangedAttackCooldownTime = 1f;
     [SerializeField] private float aimModeSensitivityModifier = 0.5f;
 
@@ -16,6 +16,7 @@ public class PlayerCombatManager : MonoBehaviour
 
     private bool isRangedAttackCooldownOver = true;
     private float rangedAttackAnimationTime;
+    private float meleeAttackAnimationTime;
 
     private void Awake()
     {
@@ -27,16 +28,20 @@ public class PlayerCombatManager : MonoBehaviour
 
         //Default value
         rangedAttackAnimationTime = pam.rangedAttackAnimationHalfDuration * 2;
+        meleeAttackAnimationTime = pam.headbuttAttackAnimationHalfDuration * 2;
     }
 
     private void Update()
     {
         //TODO: MORE UNDERSTANDABLE IF STATEMENTS
 
+        //TODO: EVENT
+        if (ped.hasArms) meleeAttackAnimationTime = punchAttackAnimationTime;
+
         if (ped.hasGun && (pim.isAimKeyDown || pim.isAimKeyUp)) ToggleAim();
 
         if (psd.isAiming && pim.isAttackKeyDown && !psd.isRangedAttacking && isRangedAttackCooldownOver) RangedAttack();
-        else if (ped.hasArms && !psd.isAiming && pim.isAttackKeyDown && !psd.isMeleeAttacking) MeleeAttack();
+        else if (!psd.isAiming && pim.isAttackKeyDown && !psd.isMeleeAttacking) MeleeAttack();
     }
 
     private void ToggleAim()

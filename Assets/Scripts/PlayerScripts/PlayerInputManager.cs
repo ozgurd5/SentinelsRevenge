@@ -9,7 +9,6 @@ public class PlayerInputManager : MonoBehaviour
     [Header("Info - No Touch")]
     public Vector2 lookInput;
     public Vector2 moveInput;
-    public bool isJumpKeyDown;
     public bool isRunKey;
     public bool isRunKeyDown;
     public bool isRunKeyUp;
@@ -31,8 +30,6 @@ public class PlayerInputManager : MonoBehaviour
         lookInput = pia.Default.Look.ReadValue<Vector2>() * sensitivity;
         lookInput.y *= -1; //Fixes y axis inversion
         moveInput = pia.Default.Movement.ReadValue<Vector2>();
-
-        isJumpKeyDown = pia.Default.Jump.WasPressedThisFrame();
 
         isRunKey = pia.Default.Run.IsPressed();
         isRunKeyDown = pia.Default.Run.WasPressedThisFrame();

@@ -6,7 +6,9 @@ public class PlayerAnimationManager : MonoBehaviour
 {
     [Header("Assign")]
     [SerializeField] private float rangedAttackAnimationMovingAmount = 20f;
+    [SerializeField] private float headButtAnimationMovingAmount = 1f;
     public float rangedAttackAnimationHalfDuration = 0.2f;
+    public float headbuttAttackAnimationHalfDuration = 0.2f;
 
     private PlayerExtensionData ped;
     private PlayerStateData psd;
@@ -16,6 +18,7 @@ public class PlayerAnimationManager : MonoBehaviour
     private Animator gunAnimator;
 
     private bool isRangedAttackAnimationPlaying;
+    private bool isHeadbuttAnimationPlaying;
 
     private void Awake()
     {
@@ -29,7 +32,8 @@ public class PlayerAnimationManager : MonoBehaviour
 
     private void Update()
     {
-        if (psd.isMeleeAttacking) PlayAnimation("MeleeAttack");
+        if (psd.isMeleeAttacking && ped.hasArms) PlayAnimation("MeleeAttack");
+        else if (psd.isMeleeAttacking && !ped.hasArms && !isHeadbuttAnimationPlaying) PlayHeadButtAnimation();
         else if (psd.isRangedAttacking && !isRangedAttackAnimationPlaying) PlayRangedAttackAnimation();
         else if (psd.isIdle) PlayAnimation("Idle");
         else if (psd.isWalking) PlayAnimation("Walk");
@@ -48,6 +52,43 @@ public class PlayerAnimationManager : MonoBehaviour
         headAnimator.enabled = !headAnimator.enabled;
         armsAnimator.enabled = !armsAnimator.enabled;
         gunAnimator.enabled = !gunAnimator.enabled;
+    }
+
+    private async void PlayHeadButtAnimation()
+    {
+        isHeadbuttAnimationPlaying = true;
+        ToggleAnimators();
+
+        float animationSpeed = headButtAnimationMovingAmount / headbuttAttackAnimationHalfDuration;
+        float movingDistance = 0f;
+        Vector3 tempPosition;
+
+        while (movingDistance < headButtAnimationMovingAmount)
+        {
+            movingDistance += Time.deltaTime * animationSpeed;
+
+            tempPosition = transform.position + transform.forward * (Time.deltaTime * animationSpeed);
+            transform.position = tempPosition;
+
+            await UniTask.NextFrame();
+        }
+
+        movingDistance = 0f;
+
+        //TODO: CLAMP??
+
+        while (movingDistance < headButtAnimationMovingAmount)
+        {
+            movingDistance += Time.deltaTime * animationSpeed;
+
+            tempPosition = transform.position - transform.forward * (Time.deltaTime * animationSpeed);
+            transform.position = tempPosition;
+
+            await UniTask.NextFrame();
+        }
+
+        ToggleAnimators();
+        isHeadbuttAnimationPlaying = false;
     }
 
     private async void PlayRangedAttackAnimation()
