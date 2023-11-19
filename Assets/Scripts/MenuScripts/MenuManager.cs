@@ -77,7 +77,7 @@ public class MenuManager : MonoBehaviour
 
     private void OnStartButton()
     {
-        SceneManager.LoadScene("OzgurScene");
+        SceneManager.LoadScene("AgahScene 1");
     }
 
     private void OnSettingButton()
