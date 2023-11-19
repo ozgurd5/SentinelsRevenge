@@ -283,6 +283,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6377132127565248990, guid: 64ef80011c34a1b4695407d38bb5b149,
+        type: 3}
+      propertyPath: health
+      value: 123113
+      objectReference: {fileID: 0}
     - target: {fileID: 7223768695193474631, guid: 64ef80011c34a1b4695407d38bb5b149,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -15868,6 +15873,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EnemyTier1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1064988712588216033, guid: 5f7a29d4e36644445bc56975922aca2e,
+        type: 3}
+      propertyPath: attackRange
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4425929635096174740, guid: 5f7a29d4e36644445bc56975922aca2e,
         type: 3}
