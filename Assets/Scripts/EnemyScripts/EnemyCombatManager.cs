@@ -25,6 +25,7 @@ public class EnemyCombatManager : MonoBehaviour, IDamageable
     private EnemyManager em;
     private EnemyAI eai;
     private EnemySoundManager esm;
+    private ParticleEffectOnDeath peod;
 
     private NavMeshAgent nma;
     private LineRenderer gunLineRenderer;
@@ -45,6 +46,7 @@ public class EnemyCombatManager : MonoBehaviour, IDamageable
         esm = GetComponent<EnemySoundManager>();
         if (isTier3) gunLineRenderer = gunLineOutTransform.GetComponent<LineRenderer>();
         playerDamageable = GameObject.Find("Player").GetComponent<IDamageable>();
+        peod = GetComponent<ParticleEffectOnDeath>();
 
         PlayerCombatManager.OnPlayerDeath += OnPlayerDeath;
 
@@ -151,6 +153,8 @@ public class EnemyCombatManager : MonoBehaviour, IDamageable
 
             Collider collider = GetComponent<Collider>();
             collider.enabled = false;
+
+            peod.PlayDeathParticle();
 
             return true;
         }

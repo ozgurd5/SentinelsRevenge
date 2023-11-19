@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 121c5ba9073c6c84495a613656933a3f
   - enabled: 1
-    path: Assets/Scenes/OzgurScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/AgahScene 1.unity
+    guid: d0e8bc0030c64dc499e87cf9e259fb28
   m_configObjects: {}
