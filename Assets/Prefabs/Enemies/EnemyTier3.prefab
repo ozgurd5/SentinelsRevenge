@@ -484,7 +484,7 @@ MonoBehaviour:
   isTier3: 1
   gunLineOutTransform: {fileID: 3492515017712133754}
   health: 10
-  damage: 5
+  damage: 3
   attackAnimationPrePrepareTime: 0.3
   attackAnimationPrepareTime: 0
   attackAnimationTime: 1

@@ -16,9 +16,9 @@ public class CameraController : MonoBehaviour
 
     [Header("Fov and Aim")]
     [SerializeField] private float fovChangingSpeed = 100f;
-    [SerializeField] private float defaultFovValue = 40f;
-    [SerializeField] private float aimFovValue = 20f;
-    [SerializeField] private float runningFovValue = 50f;
+    [SerializeField] private float defaultFovValue = 60f;
+    [SerializeField] private float aimFovValue = 40f;
+    [SerializeField] private float runningFovValue = 80f;
 
     private PlayerStateData psd;
     private PlayerInputManager pim;
