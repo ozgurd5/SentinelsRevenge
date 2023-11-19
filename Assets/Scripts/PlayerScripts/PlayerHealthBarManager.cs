@@ -13,7 +13,7 @@ public class PlayerHealthBarManager : MonoBehaviour
     private void Awake()
     {
         pcm = GetComponent<PlayerCombatManager>();
-        pcm.OnDamageTaken += UpdateHealthBar;
+        pcm.OnHealthChanged += UpdateHealthBar;
 
         //Default value
         UpdateHealthBar(10);

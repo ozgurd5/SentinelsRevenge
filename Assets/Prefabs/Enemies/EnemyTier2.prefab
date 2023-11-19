@@ -810,9 +810,9 @@ MonoBehaviour:
   runningSpeed: 7
   walkPoint: {x: 0, y: 0, z: 0}
   isWalkPointSet: 0
-  isPlayerInSightRange: 1
+  isPlayerInSightRange: 0
   isPlayerInAttackRange: 0
-  didEncounterPlayer: 1
+  didEncounterPlayer: 0
   overlapSphereColliders: []
 --- !u!114 &4550598108801313535
 MonoBehaviour:

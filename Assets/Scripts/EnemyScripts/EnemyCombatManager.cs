@@ -25,6 +25,9 @@ public class EnemyCombatManager : MonoBehaviour, IDamageable
 
     private bool isAttackCooldownOver = true;
 
+    //TODO: clean
+    private int originalHealth;
+
     public event Action<int> OnDamageTaken;
 
     private void Awake()
@@ -33,6 +36,11 @@ public class EnemyCombatManager : MonoBehaviour, IDamageable
         eai = GetComponent<EnemyAI>();
         nma = GetComponent<NavMeshAgent>();
         playerDamageable = GameObject.Find("Player").GetComponent<IDamageable>();
+
+        PlayerCombatManager.OnPlayerDeath += OnPlayerDeath;
+
+        //TODO: clean
+        originalHealth = health;
     }
 
     public async void Attack()
@@ -112,8 +120,23 @@ public class EnemyCombatManager : MonoBehaviour, IDamageable
         if (health <= 0)
         {
             em.enemyState = EnemyManager.EnemyState.Dead;
+
+            Collider collider = GetComponent<Collider>();
+            collider.enabled = false;
+
             return true;
         }
         return false;
+    }
+
+    private void OnPlayerDeath()
+    {
+        eai.didEncounterPlayer = false;
+        health = originalHealth;
+    }
+
+    private void OnDestroy()
+    {
+        PlayerCombatManager.OnPlayerDeath -= OnPlayerDeath;
     }
 }

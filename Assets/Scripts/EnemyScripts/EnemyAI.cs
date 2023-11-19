@@ -15,7 +15,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private bool isWalkPointSet;
     [SerializeField] private bool isPlayerInSightRange;
     public bool isPlayerInAttackRange;
-    [SerializeField] private bool didEncounterPlayer;
+    public bool didEncounterPlayer;
     [SerializeField] private Collider[] overlapSphereColliders;
 
     private Transform playerTransform;
@@ -91,12 +91,6 @@ public class EnemyAI : MonoBehaviour
 
         transform.LookAt(playerTransform, Vector3.up);
         transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
-    }
-
-    //TODO: IMPLEMENT
-    private void ResetAfterPlayerDeath()
-    {
-        didEncounterPlayer = false;
     }
 
     private void OnDrawGizmosSelected()

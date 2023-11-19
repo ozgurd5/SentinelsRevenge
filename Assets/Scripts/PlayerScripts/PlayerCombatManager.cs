@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerCombatManager : MonoBehaviour, IDamageable
 {
+    public static event Action OnPlayerDeath;
+
     [Header("Assign")]
     [SerializeField] private int health = 10;
     [SerializeField] private int headDamage = 1;
@@ -31,7 +33,7 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
     private float meleeAttackPrepareTime;
     private int meleeDamage;
 
-    public event Action<int> OnDamageTaken;
+    public event Action<int> OnHealthChanged;
 
     private void Awake()
     {
@@ -117,7 +119,7 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
     public async void GetDamage(int damageTakenAmount, Vector3 attackerTransformForward)
     {
         health -= damageTakenAmount;
-        OnDamageTaken?.Invoke(health);
+        OnHealthChanged?.Invoke(health);
         if (CheckForDeath()) return;
 
         PlayKnockBackAnimation(attackerTransformForward);
@@ -145,7 +147,8 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
     {
         if (health <= 0)
         {
-            //TODO: CHECKPOINT
+            OnHealthChanged?.Invoke(10);
+            OnPlayerDeath?.Invoke();
             return true;
         }
         return false;
