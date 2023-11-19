@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerInteractionManager : MonoBehaviour
 {
+    [Header("Sound")] [SerializeField] private AudioSource extensionUnlockSound;
+
     private PlayerInputManager pim;
     private CrosshairManager cm;
 
@@ -17,7 +19,11 @@ public class PlayerInteractionManager : MonoBehaviour
     {
         HandleInteractionText();
 
-        if (cm.canInteract && pim.isInteractKeyDown) cm.interactable.Interact();
+        if (cm.canInteract && pim.isInteractKeyDown)
+        {
+            cm.interactable.Interact();
+            extensionUnlockSound.Play();
+        }
     }
 
     private void HandleInteractionText()

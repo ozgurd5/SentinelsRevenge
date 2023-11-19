@@ -133,7 +133,7 @@ MonoBehaviour:
   followTargetTransform: {fileID: 0}
   followOffset: {x: 0, y: 2, z: -14}
   cameraMinYDistance: 3
-  cameraMaxYDistance: 7
+  cameraMaxYDistance: 12
   fovChangingSpeed: 100
   defaultFovValue: 40
   aimFovValue: 20

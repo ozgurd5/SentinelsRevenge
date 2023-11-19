@@ -27,6 +27,7 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
     private PlayerInputManager pim;
     private PlayerAnimationManager pam;
     private CrosshairManager cm;
+    private PlayerCombatAudioManager pcam;
 
     private Camera mainCamera;
     private CameraController cameraController;
@@ -47,6 +48,7 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
         pim = GetComponent<PlayerInputManager>();
         pam = GetComponent<PlayerAnimationManager>();
         cm = GetComponent<CrosshairManager>();
+        pcam = GetComponent<PlayerCombatAudioManager>();
 
         mainCamera = Camera.main;
         cameraController = GameObject.Find("PlayerCamera").GetComponent<CameraController>();
@@ -76,7 +78,11 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
         if (psd.isAiming && pim.isAttackKeyDown && !psd.isRangedAttacking && isRangedAttackCooldownOver) RangedAttack();
         else if (!psd.isAiming && pim.isAttackKeyDown && !psd.isMeleeAttacking) MeleeAttack();
 
-        gunLineRenderer.SetPosition(0, gunLineOutTransform.position);
+        if (gunLineRenderer.enabled)
+        {
+            gunLineRenderer.SetPosition(0, gunLineOutTransform.position);
+            gunLineRenderer.SetPosition(1, GetMiddleOfTheScreen(40f));  //TODO: 40f IS RANGEDATTACK RANGE, MAKE IT VARIABLE
+        }
     }
 
     private void ToggleAim()
@@ -86,6 +92,8 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
             cameraController.ChangeCameraFov(CameraController.FovMode.AimFov);
             psd.isAiming = true;
             PlayerInputManager.sensitivity *= aimModeSensitivityModifier;
+
+            pcam.ToggleAimSound(true);
         }
 
         else
@@ -93,6 +101,8 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
             cameraController.ChangeCameraFov(CameraController.FovMode.DefaultFov);
             psd.isAiming = false;
             PlayerInputManager.sensitivity /= aimModeSensitivityModifier;
+
+            pcam.ToggleAimSound(true);
         }
     }
 
@@ -101,7 +111,11 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
         psd.isMeleeAttacking = true;
 
         await UniTask.WaitForSeconds(meleeAttackPrepareTime);
-        if (cm.canMeleeAttack) cm.damageable?.GetDamage(meleeDamage, transform.forward);
+        if (cm.canMeleeAttack && cm.damageable != null)
+        {
+            cm.damageable.GetDamage(meleeDamage, transform.forward);
+            pcam.ToggleMeleeAttackSound(true);
+        }
         await UniTask.WaitForSeconds(meleeAttackAnimationTime - punchAttackAnimationPrepareTime);
 
         psd.isMeleeAttacking = false;
@@ -113,7 +127,7 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
         StartRangedAttackCooldown();
 
         gunLineRenderer.enabled = true;
-        gunLineRenderer.SetPosition(1, GetMiddleOfTheScreen(40f)); //TODO: 40f IS RANGEDATTACK RANGE, MAKE IT VARIABLE
+        pcam.ToggleRangedAttackSound(true);
 
         cm.damageable?.GetDamage(gunDamage, transform.forward);
         await UniTask.WaitForSeconds(rangedAttackAnimationTime);
@@ -166,10 +180,15 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
     {
         if (health <= 0)
         {
+            pcam.ToggleDeathSound(true);
+            health = 10;
             OnHealthChanged?.Invoke(10);
             OnPlayerDeath?.Invoke();
             return true;
         }
+
+        //else
+        pcam.ToggleGetHitSound(true);
         return false;
     }
 

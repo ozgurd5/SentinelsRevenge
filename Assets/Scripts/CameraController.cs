@@ -11,11 +11,11 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Vector3 followOffset;
 
     [Header("Control")]
-    [SerializeField] private float cameraMinYDistance = 1f;
-    [SerializeField] private float cameraMaxYDistance = 6f;
+    [SerializeField] private float cameraMinYDistance = 3f;
+    [SerializeField] private float cameraMaxYDistance = 12f;
 
     [Header("Fov and Aim")]
-    [SerializeField] private float fovChangingSpeed = 20f;
+    [SerializeField] private float fovChangingSpeed = 100f;
     [SerializeField] private float defaultFovValue = 40f;
     [SerializeField] private float aimFovValue = 20f;
     [SerializeField] private float runningFovValue = 50f;
