@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Interactable
   - Enemy
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
@@ -15,7 +16,7 @@ TagManager:
   - UI
   - Ground
   - Player
-  - 
+  - Enemy
   - 
   - 
   - 
