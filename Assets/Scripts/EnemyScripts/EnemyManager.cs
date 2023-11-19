@@ -9,7 +9,6 @@ public class EnemyManager : MonoBehaviour
         Chasing,
         Attacking,
         Waiting,
-        GettingDamage,
         Dead
     }
 

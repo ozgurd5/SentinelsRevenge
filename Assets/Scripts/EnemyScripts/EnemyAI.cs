@@ -36,12 +36,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
-        if (em.enemyState == EnemyManager.EnemyState.Dead) return;
-        if (em.enemyState == EnemyManager.EnemyState.GettingDamage)
-        {
-            navMeshAgent.isStopped = true;
-            return;
-        }
+        if (em.enemyState is EnemyManager.EnemyState.Dead or EnemyManager.EnemyState.Waiting) return;
 
         isPlayerInSightRange = Physics.CheckSphere(transform.position, sightRange, playerLayer);
         isPlayerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayer);
@@ -102,7 +97,6 @@ public class EnemyAI : MonoBehaviour
     private void ResetAfterPlayerDeath()
     {
         didEncounterPlayer = false;
-        navMeshAgent.isStopped = false;
     }
 
     private void OnDrawGizmosSelected()

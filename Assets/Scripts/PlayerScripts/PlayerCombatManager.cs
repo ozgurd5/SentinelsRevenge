@@ -12,6 +12,7 @@ public class PlayerCombatManager : MonoBehaviour
     private PlayerStateData psd;
     private PlayerInputManager pim;
     private PlayerAnimationManager pam;
+    private CrosshairManager cm;
     private CameraController cameraController;
 
     private bool isRangedAttackCooldownOver = true;
@@ -24,6 +25,7 @@ public class PlayerCombatManager : MonoBehaviour
         psd = GetComponent<PlayerStateData>();
         pim = GetComponent<PlayerInputManager>();
         pam = GetComponent<PlayerAnimationManager>();
+        cm = GetComponent<CrosshairManager>();
         cameraController = GameObject.Find("PlayerCamera").GetComponent<CameraController>();
 
         //Default value
@@ -65,7 +67,9 @@ public class PlayerCombatManager : MonoBehaviour
     {
         psd.isMeleeAttacking = true;
 
+        if (cm.canMeleeAttack) cm.damageable?.GetDamage(5, transform.forward);
         await UniTask.WaitForSeconds(meleeAttackAnimationTime);
+
         psd.isMeleeAttacking = false;
     }
 
@@ -74,7 +78,10 @@ public class PlayerCombatManager : MonoBehaviour
         psd.isRangedAttacking = true;
         StartRangedAttackCooldown();
 
+        //if (cm.canRangedAttack) no need for that
+        cm.damageable?.GetDamage(5, transform.forward);
         await UniTask.WaitForSeconds(rangedAttackAnimationTime);
+
         psd.isRangedAttacking = false;
     }
 

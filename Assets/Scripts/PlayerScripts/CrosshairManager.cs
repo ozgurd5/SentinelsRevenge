@@ -15,7 +15,7 @@ public class CrosshairManager : MonoBehaviour
     public bool canRangedAttack;
     public float distanceToHitTarget;
 
-    public IDamageable damagable;
+    public IDamageable damageable;
     public IInteractable interactable;
     public IInteractable previousInteractable;
 
@@ -64,7 +64,7 @@ public class CrosshairManager : MonoBehaviour
         canMeleeAttack = false;
         canRangedAttack = false;
 
-        damagable = null;
+        damageable = null;
         interactable = null;
 
         if (Physics.Raycast(crosshairRay, out crosshairHit, rangeAttackRange, layerMask))
@@ -81,7 +81,7 @@ public class CrosshairManager : MonoBehaviour
                 }
 
                 canMeleeAttack = crosshairHit.collider.CompareTag("Enemy");
-                if (canMeleeAttack) damagable = crosshairHit.collider.GetComponent<IDamageable>();
+                if (canMeleeAttack) damageable = crosshairHit.collider.GetComponent<IDamageable>();
             }
 
             else if (distanceToHitTarget < interactRange)
@@ -94,13 +94,13 @@ public class CrosshairManager : MonoBehaviour
                 }
 
                 canRangedAttack = crosshairHit.collider.CompareTag("Enemy");
-                if (canRangedAttack) damagable = crosshairHit.collider.GetComponent<IDamageable>();
+                if (canRangedAttack) damageable = crosshairHit.collider.GetComponent<IDamageable>();
             }
 
             else if (distanceToHitTarget < rangeAttackRange)
             {
                 canRangedAttack = crosshairHit.collider.CompareTag("Enemy");
-                if (canRangedAttack) damagable = crosshairHit.collider.GetComponent<IDamageable>();
+                if (canRangedAttack) damageable = crosshairHit.collider.GetComponent<IDamageable>();
             }
         }
     }
