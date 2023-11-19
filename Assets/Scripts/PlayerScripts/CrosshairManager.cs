@@ -4,23 +4,27 @@ using UnityEngine.UI;
 public class CrosshairManager : MonoBehaviour
 {
     [Header("Assign")]
-    [SerializeField] private float interactRange = 30f;
-    [SerializeField] private float meleeAttackRange = 20f;
-    [SerializeField] private float rangeAttackRange = 100f;
+    [SerializeField] private float interactRange = 5f;
+    [SerializeField] private float rangeAttackRange = 40f;
     [SerializeField] [Range(0, 1)] private float opacity = 0.3f;
+    [SerializeField] private Vector3 overlapBoxHalfExtends = new Vector3(0.1f, 0.5f, 0.1f);
+    [SerializeField] private float overlapSphereSize = 0.6f;
+    [SerializeField] private Transform overlapBoxCenterTransform;
+    [SerializeField] private Transform overlapSphereCenterTransform;
 
     [Header("Info - No Touch")]
     public bool canInteract;
     public bool canMeleeAttack;
     public bool canRangedAttack;
     public float distanceToHitTarget;
+    public Collider[] overlapColliders;
 
     public IDamageable damageable;
     public IInteractable interactable;
     public IInteractable previousInteractable;
 
-    private PlayerStateData psd;
     private PlayerExtensionData ped;
+    private PlayerStateData psd;
     private Camera cam;
     private Image crosshairImage;
 
@@ -32,8 +36,8 @@ public class CrosshairManager : MonoBehaviour
 
     private void Awake()
     {
-        psd = GetComponent<PlayerStateData>();
         ped = GetComponent<PlayerExtensionData>();
+        psd = GetComponent<PlayerStateData>();
         cam = Camera.main;
         crosshairImage = GetComponentInChildren<Image>();
 
@@ -47,7 +51,8 @@ public class CrosshairManager : MonoBehaviour
     {
         if (psd.playerMainState != PlayerStateData.PlayerMainState.Normal) return;
 
-        CastRays();
+        CastRay();
+        OverlapBoxOrSphere();
         HandleCrosshairColor();
 
         #if UNITY_EDITOR
@@ -56,7 +61,7 @@ public class CrosshairManager : MonoBehaviour
     }
 
     //TODO: MORE FLEXIBLE CODE
-    private void CastRays()
+    private void CastRay()
     {
         crosshairRay = cam.ScreenPointToRay(crosshairImage.rectTransform.position);
 
@@ -71,20 +76,7 @@ public class CrosshairManager : MonoBehaviour
         {
             distanceToHitTarget = Vector3.Distance(transform.position, crosshairHit.collider.transform.position);
 
-            if (distanceToHitTarget < meleeAttackRange)
-            {
-                canInteract = crosshairHit.collider.CompareTag("Interactable");
-                if (canInteract)
-                {
-                    interactable = crosshairHit.collider.GetComponentInChildren<IInteractable>();
-                    previousInteractable = interactable;
-                }
-
-                canMeleeAttack = crosshairHit.collider.CompareTag("Enemy");
-                if (canMeleeAttack) damageable = crosshairHit.collider.GetComponent<IDamageable>();
-            }
-
-            else if (distanceToHitTarget < interactRange)
+            if (distanceToHitTarget < interactRange)
             {
                 canInteract = crosshairHit.collider.CompareTag("Interactable");
                 if (canInteract)
@@ -101,6 +93,37 @@ public class CrosshairManager : MonoBehaviour
             {
                 canRangedAttack = crosshairHit.collider.CompareTag("Enemy");
                 if (canRangedAttack) damageable = crosshairHit.collider.GetComponent<IDamageable>();
+            }
+        }
+    }
+
+    private void OverlapBoxOrSphere()
+    {
+        if (ped.hasArms)
+        {
+            overlapColliders = Physics.OverlapSphere(overlapSphereCenterTransform.position, overlapSphereSize);
+            foreach (Collider item in overlapColliders)
+            {
+                if (item.CompareTag("Enemy"))
+                {
+                    canMeleeAttack = true;
+                    damageable = item.GetComponent<IDamageable>();
+                    break;
+                }
+            }
+        }
+
+        else
+        {
+            overlapColliders = Physics.OverlapBox(overlapBoxCenterTransform.position, overlapBoxHalfExtends);
+            foreach (Collider item in overlapColliders)
+            {
+                if (item.CompareTag("Enemy"))
+                {
+                    canMeleeAttack = true;
+                    damageable = item.GetComponent<IDamageable>();
+                    break;
+                }
             }
         }
     }
@@ -133,5 +156,12 @@ public class CrosshairManager : MonoBehaviour
         else temporaryColor.a = opacity;
 
         crosshairImage.color = temporaryColor;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        if (ped.hasArms) Gizmos.DrawWireSphere(overlapSphereCenterTransform.position, overlapSphereSize);
+        else Gizmos.DrawWireCube(overlapBoxCenterTransform.position, overlapBoxHalfExtends * 2);
     }
 }

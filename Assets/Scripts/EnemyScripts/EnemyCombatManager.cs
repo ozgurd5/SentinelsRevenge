@@ -36,7 +36,7 @@ public class EnemyCombatManager : MonoBehaviour, IDamageable
         em.enemyState = EnemyManager.EnemyState.Attacking;
         await UniTask.WaitForSeconds(attackAnimationTime);
 
-        em.enemyState = EnemyManager.EnemyState.Waiting;
+        em.enemyState = EnemyManager.EnemyState.Walking;
     }
 
     private async void StartAttackCooldown()
