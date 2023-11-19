@@ -24,9 +24,11 @@ public class EnemyCombatManager : MonoBehaviour, IDamageable
 
     private EnemyManager em;
     private EnemyAI eai;
+    private EnemySoundManager esm;
+
     private NavMeshAgent nma;
-    private IDamageable playerDamageable;
     private LineRenderer gunLineRenderer;
+    private IDamageable playerDamageable;
 
     private bool isAttackCooldownOver = true;
 
@@ -40,8 +42,9 @@ public class EnemyCombatManager : MonoBehaviour, IDamageable
         em = GetComponent<EnemyManager>();
         eai = GetComponent<EnemyAI>();
         nma = GetComponent<NavMeshAgent>();
+        esm = GetComponent<EnemySoundManager>();
+        if (isTier3) gunLineRenderer = gunLineOutTransform.GetComponent<LineRenderer>();
         playerDamageable = GameObject.Find("Player").GetComponent<IDamageable>();
-        gunLineRenderer = gunLineOutTransform.GetComponent<LineRenderer>();
 
         PlayerCombatManager.OnPlayerDeath += OnPlayerDeath;
 
@@ -77,6 +80,7 @@ public class EnemyCombatManager : MonoBehaviour, IDamageable
     private async void ShootLaser()
     {
         gunLineRenderer.enabled = true;
+        esm.ToggleRangedAttackSound(true);
         await UniTask.WaitForSeconds(attackAnimationTime - attackAnimationPrepareTime);
         gunLineRenderer.enabled = false;
     }
@@ -84,7 +88,7 @@ public class EnemyCombatManager : MonoBehaviour, IDamageable
     private Vector3 playerPositionOffset = new Vector3(0f, 1f, 0f);
     private void Update()
     {
-        if (gunLineRenderer.enabled)
+        if (isTier3 && gunLineRenderer.enabled)
         {
             gunLineRenderer.SetPosition(0, gunLineOutTransform.position);
             gunLineRenderer.SetPosition(1, playerDamageable.GetTransform().position + playerPositionOffset);
@@ -143,12 +147,14 @@ public class EnemyCombatManager : MonoBehaviour, IDamageable
         if (health <= 0)
         {
             em.enemyState = EnemyManager.EnemyState.Dead;
+            esm.ToggleDeathSound(true);
 
             Collider collider = GetComponent<Collider>();
             collider.enabled = false;
 
             return true;
         }
+
         return false;
     }
 
