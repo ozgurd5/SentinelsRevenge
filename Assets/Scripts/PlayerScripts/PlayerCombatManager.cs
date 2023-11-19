@@ -28,6 +28,7 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
     private PlayerAnimationManager pam;
     private CrosshairManager cm;
     private PlayerCombatAudioManager pcam;
+    private AttackParticleEffect ape;
 
     private Camera mainCamera;
     private CameraController cameraController;
@@ -49,6 +50,7 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
         pam = GetComponent<PlayerAnimationManager>();
         cm = GetComponent<CrosshairManager>();
         pcam = GetComponent<PlayerCombatAudioManager>();
+        ape = GetComponent<AttackParticleEffect>();
 
         mainCamera = Camera.main;
         cameraController = GameObject.Find("PlayerCamera").GetComponent<CameraController>();
@@ -115,6 +117,9 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
         {
             cm.damageable.GetDamage(meleeDamage, transform.forward);
             pcam.ToggleMeleeAttackSound(true);
+
+            if (ped.hasArms) ape.PlayPunchParticle();
+            else ape.PlayHeadbuttParticle();//
         }
         await UniTask.WaitForSeconds(meleeAttackAnimationTime - punchAttackAnimationPrepareTime);
 

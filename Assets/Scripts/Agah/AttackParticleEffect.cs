@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AttackParticleEffect : MonoBehaviour
@@ -7,7 +5,7 @@ public class AttackParticleEffect : MonoBehaviour
     [SerializeField]ParticleSystem headbuttParticle;
     [SerializeField] ParticleSystem punchParticle;
 
-    void PlayHeadbuttParticle()
+    public void PlayHeadbuttParticle()
     {
         if (headbuttParticle != null)
         {
@@ -15,7 +13,7 @@ public class AttackParticleEffect : MonoBehaviour
         }
     }
 
-    void PlayPunchParticle()
+    public void PlayPunchParticle()
     {
         if (punchParticle != null)
         {
