@@ -11,6 +11,6 @@ public class CollectibleRigidbodyPositionConstraint : MonoBehaviour
 
     private void OnCollisionEnter(Collision col)
     {
-        rb.constraints = RigidbodyConstraints.FreezePosition;
+        if (!col.collider.CompareTag("Player")) rb.constraints = RigidbodyConstraints.FreezePosition;
     }
 }
