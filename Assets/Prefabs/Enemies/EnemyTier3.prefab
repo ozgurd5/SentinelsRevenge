@@ -305,8 +305,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkPointRange: 10
-  sightRange: 15
-  attackRange: 10
+  sightRange: 20
+  attackRange: 15
   walkingSpeed: 1
   runningSpeed: 5
   walkPoint: {x: 0, y: 0, z: 0}
@@ -340,16 +340,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03b1fb4f6f720654aa099d822f701a5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 5
+  health: 10
   damage: 5
+  attackAnimationPrePrepareTime: 0.3
   attackAnimationPrepareTime: 0
   attackAnimationTime: 1
   attackCooldownTime: 2
   knockBackAmount: 2
   chasingKnockBackModifier: 200
   knockBackDuration: 0.2
-  isTier3: 1
-  tier3AttackAnimationPrePrepareTime: 0.5
 --- !u!114 &4252066569599471128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1443,7 +1442,7 @@ PrefabInstance:
     - target: {fileID: 4892051381186243608, guid: b35bf1cb229a35241ae8f4a09153c123,
         type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5052574341824993413, guid: b35bf1cb229a35241ae8f4a09153c123,
         type: 3}

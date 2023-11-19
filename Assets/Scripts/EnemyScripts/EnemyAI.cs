@@ -14,7 +14,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private Vector3 walkPoint;
     [SerializeField] private bool isWalkPointSet;
     [SerializeField] private bool isPlayerInSightRange;
-    [SerializeField] private bool isPlayerInAttackRange;
+    public bool isPlayerInAttackRange;
     [SerializeField] private bool didEncounterPlayer;
     [SerializeField] private Collider[] overlapSphereColliders;
 

@@ -398,10 +398,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 773717559202181676}
-  - component: {fileID: 5753320836366216223}
   - component: {fileID: 3182818431943545246}
   - component: {fileID: 6988287616367648260}
-  - component: {fileID: 7384960226953885630}
   m_Layer: 0
   m_Name: CollectibleArms
   m_TagString: Interactable
@@ -427,33 +425,6 @@ Transform:
   - {fileID: 5326013333664775919}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &5753320836366216223
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6121691496212035381}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 80
-  m_CollisionDetection: 0
 --- !u!65 &3182818431943545246
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -491,18 +462,6 @@ MonoBehaviour:
   goingUpTime: 1
   goingUpDistance: 1
   approachingPlayerTime: 1
---- !u!114 &7384960226953885630
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6121691496212035381}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b62f20b67acbbdf4eb43b893d50f52ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6454694676933637657
 GameObject:
   m_ObjectHideFlags: 0

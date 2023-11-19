@@ -805,14 +805,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkPointRange: 10
   sightRange: 10
-  attackRange: 4
-  walkingSpeed: 7
-  runningSpeed: 10
+  attackRange: 3.5
+  walkingSpeed: 5
+  runningSpeed: 7
   walkPoint: {x: 0, y: 0, z: 0}
   isWalkPointSet: 0
-  isPlayerInSightRange: 0
+  isPlayerInSightRange: 1
   isPlayerInAttackRange: 0
-  didEncounterPlayer: 0
+  didEncounterPlayer: 1
   overlapSphereColliders: []
 --- !u!114 &4550598108801313535
 MonoBehaviour:
@@ -839,16 +839,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03b1fb4f6f720654aa099d822f701a5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 15
+  health: 10
   damage: 3
+  attackAnimationPrePrepareTime: 0.3
   attackAnimationPrepareTime: 0.3
   attackAnimationTime: 1
   attackCooldownTime: 1
   knockBackAmount: 4
   chasingKnockBackModifier: 100
   knockBackDuration: 0.2
-  isTier3: 0
-  tier3AttackAnimationPrePrepareTime: 0.3
 --- !u!114 &8602584946182171869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1115,7 +1114,7 @@ PrefabInstance:
     - target: {fileID: 4892051381186243608, guid: b35bf1cb229a35241ae8f4a09153c123,
         type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5052574341824993413, guid: b35bf1cb229a35241ae8f4a09153c123,
         type: 3}

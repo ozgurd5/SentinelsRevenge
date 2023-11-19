@@ -19,6 +19,7 @@ public class EnemyCombatManager : MonoBehaviour, IDamageable
     [SerializeField] private float knockBackDuration = 0.2f;
 
     private EnemyManager em;
+    private EnemyAI eai;
     private NavMeshAgent nma;
     private IDamageable playerDamageable;
 
@@ -29,6 +30,7 @@ public class EnemyCombatManager : MonoBehaviour, IDamageable
     private void Awake()
     {
         em = GetComponent<EnemyManager>();
+        eai = GetComponent<EnemyAI>();
         nma = GetComponent<NavMeshAgent>();
         playerDamageable = GameObject.Find("Player").GetComponent<IDamageable>();
     }
@@ -38,15 +40,17 @@ public class EnemyCombatManager : MonoBehaviour, IDamageable
         if (!isAttackCooldownOver) return;
 
         StartAttackCooldown();
-
         em.enemyState = EnemyManager.EnemyState.Waiting;
+
         await UniTask.WaitForSeconds(attackAnimationPrePrepareTime);
+        if (em.enemyState == EnemyManager.EnemyState.Dead) return; //Explanation is in down
 
         em.enemyState = EnemyManager.EnemyState.Attacking;
 
         await UniTask.WaitForSeconds(attackAnimationPrepareTime);
         if (em.enemyState == EnemyManager.EnemyState.Dead) return; //Explanation is in down
-        playerDamageable.GetDamage(damage, transform.forward);
+        if (!eai.isPlayerInAttackRange) return; //Giving player time to escape/dodge
+        else playerDamageable.GetDamage(damage, transform.forward);
 
         await UniTask.WaitForSeconds(attackAnimationTime - attackAnimationPrepareTime);
         if (em.enemyState == EnemyManager.EnemyState.Dead) return; //Explanation is in down
