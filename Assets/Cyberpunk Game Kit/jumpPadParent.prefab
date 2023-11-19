@@ -260,7 +260,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 30, y: 2, z: 30}
+  m_Size: {x: 6, y: 2, z: 3.5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5728369311669275549
 MonoBehaviour:
@@ -277,7 +277,9 @@ MonoBehaviour:
   barrier: {fileID: 8426381833139592066}
   barrierPopFX: {fileID: 7849791404790678205, guid: 666f3d77e43168647a444855a67ea9b6,
     type: 3}
-  boxBounds: {x: 30, y: 2, z: 30}
+  boxBounds: {x: 6, y: 2, z: 3.5}
+  enemies: []
+  aliveEnemies: 0
 --- !u!1 &7175172413778513740
 GameObject:
   m_ObjectHideFlags: 0
