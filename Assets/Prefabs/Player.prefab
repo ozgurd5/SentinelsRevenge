@@ -261,7 +261,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rangedAttackAnimationMovingAmount: 20
-  headButtAnimationMovingAmount: 1
+  headButtAnimationMovingAmount: 3
   rangedAttackAnimationHalfDuration: 0.2
   headbuttAttackAnimationHalfDuration: 0.2
 --- !u!114 &4984361098546184626
@@ -279,8 +279,8 @@ MonoBehaviour:
   interactRange: 5
   rangeAttackRange: 40
   opacity: 0.3
-  overlapBoxHalfExtends: {x: 0.5, y: 1, z: 0.5}
-  overlapSphereSize: 0.6
+  overlapBoxHalfExtends: {x: 1.5, y: 1, z: 1.5}
+  overlapSphereSize: 1.5
   overlapBoxCenterTransform: {fileID: 525277953711079019}
   overlapSphereCenterTransform: {fileID: 6502887172578424}
   canInteract: 0
@@ -1528,7 +1528,7 @@ Transform:
   m_GameObject: {fileID: 2156511631177058123}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0.5, z: 0.7}
+  m_LocalPosition: {x: 0.4, y: 0.5, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1686,7 +1686,7 @@ Transform:
   m_GameObject: {fileID: 2803928244247615320}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0.5}
+  m_LocalPosition: {x: 0, y: 0.5, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

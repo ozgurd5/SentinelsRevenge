@@ -12,6 +12,7 @@ public class PlayerAnimationManager : MonoBehaviour
 
     private PlayerExtensionData ped;
     private PlayerStateData psd;
+    private CameraController cc;
 
     private Animator headAnimator;
     private Animator armsAnimator;
@@ -24,6 +25,7 @@ public class PlayerAnimationManager : MonoBehaviour
     {
         ped = GetComponent<PlayerExtensionData>();
         psd = GetComponent<PlayerStateData>();
+        cc = GameObject.Find("PlayerCamera").GetComponent<CameraController>();
 
         headAnimator = transform.GetChild(0).GetComponent<Animator>();
         armsAnimator = transform.GetChild(1).GetComponent<Animator>();
@@ -58,6 +60,7 @@ public class PlayerAnimationManager : MonoBehaviour
     {
         isHeadbuttAnimationPlaying = true;
         ToggleAnimators();
+        cc.ChangeCameraFov(CameraController.FovMode.RunningFov);
 
         float animationSpeed = headButtAnimationMovingAmount / headbuttAttackAnimationHalfDuration;
         float movingDistance = 0f;
@@ -75,8 +78,6 @@ public class PlayerAnimationManager : MonoBehaviour
 
         movingDistance = 0f;
 
-        //TODO: CLAMP??
-
         while (movingDistance < headButtAnimationMovingAmount)
         {
             movingDistance += Time.deltaTime * animationSpeed;
@@ -86,7 +87,8 @@ public class PlayerAnimationManager : MonoBehaviour
 
             await UniTask.NextFrame();
         }
-
+        
+        cc.ChangeCameraFov(CameraController.FovMode.DefaultFov);
         ToggleAnimators();
         isHeadbuttAnimationPlaying = false;
     }

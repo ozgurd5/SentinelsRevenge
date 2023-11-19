@@ -64,7 +64,9 @@ public class EnemyAI : MonoBehaviour
 
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 
-        //Walk point must must be in open space, not inside of an object. //Also checks (accidentally) if walkPoint in the air or not
+        //TODO: Walk point must must be over a ground, not in the air
+
+        //Walk point must must be in open space, not inside of an object
         overlapSphereColliders = Physics.OverlapSphere(walkPoint, 2f); //Don't use non-alloc. Check the note in bellow
         if (overlapSphereColliders.Length > 1) isWalkPointSet = true;
 
