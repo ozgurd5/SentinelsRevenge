@@ -21,7 +21,7 @@ public class CheckpointManager : MonoBehaviour
 
     private void Update()
     {
-        if(player.transform.position.y < -400f) player.GetComponent<IDamageable>().GetDamage(10, Vector3.down);
+        if(player.transform.position.y < -100f) player.GetComponent<IDamageable>().GetDamage(10, Vector3.down);
     }
 
     private void PlayerCombatManager_OnPlayerDeath()

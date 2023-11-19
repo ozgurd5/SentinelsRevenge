@@ -2879,7 +2879,8 @@ PrefabInstance:
 
         2D Assets: Kenney
 
-'
+        Music:
+        SoundFlakes'
       objectReference: {fileID: 0}
     - target: {fileID: 1147785312049244482, guid: 42bab85fe3dc4904daf257a438f82491,
         type: 3}
@@ -2974,7 +2975,7 @@ PrefabInstance:
     - target: {fileID: 3477545417531551804, guid: 42bab85fe3dc4904daf257a438f82491,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 37.5
+      value: 12.5
       objectReference: {fileID: 0}
     - target: {fileID: 3477545417531551804, guid: 42bab85fe3dc4904daf257a438f82491,
         type: 3}
