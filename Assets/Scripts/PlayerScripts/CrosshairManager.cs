@@ -99,6 +99,9 @@ public class CrosshairManager : MonoBehaviour
 
     private void OverlapBoxOrSphere()
     {
+        //Don't set damageable to null. 2 reason: 1- There is no need, CastRay() does it every frame for this method. 2- It deletes ranged attack target..
+        //..which detected in the CastRay() method
+
         if (ped.hasArms)
         {
             overlapColliders = Physics.OverlapSphere(overlapSphereCenterTransform.position, overlapSphereSize);
@@ -130,6 +133,8 @@ public class CrosshairManager : MonoBehaviour
 
     private void HandleCrosshairColor()
     {
+        //TODO: DON'T DETECT DEAD ENEMIES
+
         //We can not directly change crosshairImage.color.a
         //We can only assign a color variable to it. Therefore we need a temporary color variable..
         //..to make changes upon and finally assign it

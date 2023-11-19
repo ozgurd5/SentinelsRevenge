@@ -51,10 +51,15 @@ public class EnemyCombatManager : MonoBehaviour, IDamageable
         em.enemyState = EnemyManager.EnemyState.Attacking;
 
         await UniTask.WaitForSeconds(attackAnimationPrepareTime);
-        playerDamageable.GetDamage(5, transform.forward);
+        if (em.enemyState == EnemyManager.EnemyState.Dead) return; //Explanation is in down
+        playerDamageable.GetDamage(damage, transform.forward);
 
         await UniTask.WaitForSeconds(attackAnimationTime - attackAnimationPrepareTime);
+        if (em.enemyState == EnemyManager.EnemyState.Dead) return; //Explanation is in down
         em.enemyState = EnemyManager.EnemyState.Walking;
+
+        //Explanation: When enemy decided to attack the player, it may die while attacking async operation is in process. That results in resurrection and..
+        //..must not be happen.
     }
 
     private async void StartAttackCooldown()
@@ -74,13 +79,13 @@ public class EnemyCombatManager : MonoBehaviour, IDamageable
         health -= damageTakenAmount;
         OnDamageTaken?.Invoke(health);
 
+        if (CheckForDeath()) return;
+
         PlayKnockBackAnimation(attackerTransformForward);
         await UniTask.WaitForSeconds(knockBackDuration);
 
         nma.isStopped = false;
         em.enemyState = EnemyManager.EnemyState.Walking;
-
-        //CheckForDeath();
     }
 
     private async void PlayKnockBackAnimation(Vector3 attackerTransformForward)
@@ -104,11 +109,13 @@ public class EnemyCombatManager : MonoBehaviour, IDamageable
         }
     }
 
-    private void CheckForDeath()
+    private bool CheckForDeath()
     {
         if (health <= 0)
         {
             em.enemyState = EnemyManager.EnemyState.Dead;
+            return true;
         }
+        return false;
     }
 }
