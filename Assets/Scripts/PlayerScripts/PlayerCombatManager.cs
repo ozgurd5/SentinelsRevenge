@@ -12,6 +12,8 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
     [SerializeField] private int armsDamage = 3;
     [SerializeField] private int gunDamage = 5;
 
+    [Header("Assign")] [SerializeField] private Transform gunLineOutTransform;
+
     [Header("Assign")]
     [SerializeField] private float punchAttackAnimationPrepareTime = 0.3f;
     [SerializeField] private float punchAttackAnimationTime = 0.8f;
@@ -25,7 +27,10 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
     private PlayerInputManager pim;
     private PlayerAnimationManager pam;
     private CrosshairManager cm;
+
+    private Camera mainCamera;
     private CameraController cameraController;
+    private LineRenderer gunLineRenderer;
 
     private bool isRangedAttackCooldownOver = true;
     private float rangedAttackAnimationTime;
@@ -42,7 +47,10 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
         pim = GetComponent<PlayerInputManager>();
         pam = GetComponent<PlayerAnimationManager>();
         cm = GetComponent<CrosshairManager>();
+
+        mainCamera = Camera.main;
         cameraController = GameObject.Find("PlayerCamera").GetComponent<CameraController>();
+        gunLineRenderer = gunLineOutTransform.GetComponent<LineRenderer>();
 
         //Default value
         rangedAttackAnimationTime = pam.rangedAttackAnimationHalfDuration * 2;
@@ -67,6 +75,8 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
 
         if (psd.isAiming && pim.isAttackKeyDown && !psd.isRangedAttacking && isRangedAttackCooldownOver) RangedAttack();
         else if (!psd.isAiming && pim.isAttackKeyDown && !psd.isMeleeAttacking) MeleeAttack();
+
+        gunLineRenderer.SetPosition(0, gunLineOutTransform.position);
     }
 
     private void ToggleAim()
@@ -102,11 +112,20 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
         psd.isRangedAttacking = true;
         StartRangedAttackCooldown();
 
-        //if (cm.canRangedAttack) no need for that
+        gunLineRenderer.enabled = true;
+        gunLineRenderer.SetPosition(1, GetMiddleOfTheScreen(40f)); //TODO: 40f IS RANGEDATTACK RANGE, MAKE IT VARIABLE
+
         cm.damageable?.GetDamage(gunDamage, transform.forward);
         await UniTask.WaitForSeconds(rangedAttackAnimationTime);
 
+        gunLineRenderer.enabled = false;
         psd.isRangedAttacking = false;
+    }
+
+    private Vector3 GetMiddleOfTheScreen(float zValue)
+    {
+        Vector3 viewportMiddle = new Vector3(0.5f, 0.5f, zValue);
+        return mainCamera.ViewportToWorldPoint(viewportMiddle);
     }
 
     private async void StartRangedAttackCooldown()
@@ -152,5 +171,11 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
             return true;
         }
         return false;
+    }
+
+    //This is stupid v2 2/3
+    public Transform GetTransform()
+    {
+        return transform;
     }
 }
