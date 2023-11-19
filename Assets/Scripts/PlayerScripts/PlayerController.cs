@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     [Header("Assign")]
     [SerializeField] private float walkingSpeed = 5f;
     [SerializeField] private float runningSpeed = 8f;
+    [SerializeField] private float jumpSpeed = 10f;
     [SerializeField] private float rotatingSpeed = 0.1f;
     [SerializeField] private float acceleration = 5f;
     [SerializeField] private float deceleration = 10f;
@@ -41,6 +42,7 @@ public class PlayerController : MonoBehaviour
         DecideWalkingOrRunning();
 
         HandleRotation();
+        HandleJump();
     }
 
     private void FixedUpdate()
@@ -79,6 +81,15 @@ public class PlayerController : MonoBehaviour
             StopSpeedCoroutines();
             StartCoroutine(ChangeSpeed(false, walkingSpeed));
             cameraController.ChangeCameraFov(CameraController.FovMode.DefaultFov);
+        }
+    }
+
+    private void HandleJump()
+    {
+        if (psd.isGrounded && pim.isJumpKeyDown)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, jumpSpeed, rb.velocity.z);
+            psd.isJumping = true;
         }
     }
 

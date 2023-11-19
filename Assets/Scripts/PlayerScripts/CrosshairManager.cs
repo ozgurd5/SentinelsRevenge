@@ -164,9 +164,11 @@ public class CrosshairManager : MonoBehaviour
     }
 
     private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        if (ped.hasArms) Gizmos.DrawWireSphere(overlapSphereCenterTransform.position, overlapSphereSize);
-        else Gizmos.DrawWireCube(overlapBoxCenterTransform.position, overlapBoxHalfExtends * 2);
+   {
+       Gizmos.color = Color.red;
+       if (ped == null) return; //fckn error
+
+       if (ped.hasArms) Gizmos.DrawWireSphere(overlapSphereCenterTransform.position, overlapSphereSize);
+       else Gizmos.DrawWireCube(overlapBoxCenterTransform.position, overlapBoxHalfExtends * 2);
     }
 }

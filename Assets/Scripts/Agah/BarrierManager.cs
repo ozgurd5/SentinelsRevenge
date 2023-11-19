@@ -1,46 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Mathematics;
+using System;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 public class BarrierManager : MonoBehaviour
 {
-    private Collider[] enemies;
+    [Header("Assign")]
     [SerializeField] GameObject barrier;
     [SerializeField] ParticleSystem barrierPopFX;
     [SerializeField] Vector3 boxBounds;
 
+    [Header("Info - No Touch")]
+    [SerializeField] private Collider[] enemies;
+    [SerializeField] private int aliveEnemies;
+
+    private int layerMask = 1 << 8;
+
     private void Start()
     {
-        enemies = Physics.OverlapBox(transform.position, boxBounds, quaternion.identity, 8);
+        enemies = Physics.OverlapBox(transform.position, boxBounds, Quaternion.identity, layerMask);
     }
 
     private void Update()
     {
-        if(barrier.activeInHierarchy)
-            StartCoroutine(CheckEnemies());
-    }
-    IEnumerator CheckEnemies()
-    {
-        float aliveEnemies = enemies.Length;
+        if (!barrier.activeSelf) return;
+
+        aliveEnemies = enemies.Length;
+        foreach (Collider enemy in enemies)
+        {
+            if (enemy.GetComponent<EnemyManager>().enemyState == EnemyManager.EnemyState.Dead) aliveEnemies--;
+        }
+
         if (aliveEnemies == 0)
         {
             barrier.SetActive(false);
             barrierPopFX.Play();
-            yield break;
         }
-        
-        foreach (var enemy in enemies)
-        {
-            Debug.Log(enemy);
-            if (true)//enemy==dead
-            {
-                aliveEnemies--;
-            }
-        }
-
-        yield return new WaitForSeconds(5 * Time.deltaTime);
     }
-
 }

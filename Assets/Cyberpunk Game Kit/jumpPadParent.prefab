@@ -275,7 +275,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   barrier: {fileID: 8426381833139592066}
-  barrierPopFX: {fileID: 0}
+  barrierPopFX: {fileID: 7849791404790678205, guid: 666f3d77e43168647a444855a67ea9b6,
+    type: 3}
   boxBounds: {x: 30, y: 2, z: 30}
 --- !u!1 &7175172413778513740
 GameObject:

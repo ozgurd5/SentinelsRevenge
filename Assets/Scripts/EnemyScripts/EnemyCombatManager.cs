@@ -10,16 +10,13 @@ public class EnemyCombatManager : MonoBehaviour, IDamageable
     [SerializeField] private int damage;
 
     [Header("Assign - Attack Animation")]
+    [SerializeField] private float attackAnimationPrePrepareTime = 0.3f;
     [SerializeField] private float attackAnimationPrepareTime = 0.3f;
     [SerializeField] private float attackAnimationTime = 1f;
     [SerializeField] private float attackCooldownTime = 2f;
     [SerializeField] private float knockBackAmount = 2f;
     [SerializeField] private float chasingKnockBackModifier = 200f;
     [SerializeField] private float knockBackDuration = 0.2f;
-
-    [Header("Assign - Tier 3 Only")]
-    [SerializeField] private bool isTier3;
-    [SerializeField] private float tier3AttackAnimationPrePrepareTime = 0.3f;
 
     private EnemyManager em;
     private NavMeshAgent nma;
@@ -42,11 +39,8 @@ public class EnemyCombatManager : MonoBehaviour, IDamageable
 
         StartAttackCooldown();
 
-        if (isTier3)
-        {
-            em.enemyState = EnemyManager.EnemyState.Waiting;
-            await UniTask.WaitForSeconds(tier3AttackAnimationPrePrepareTime);
-        }
+        em.enemyState = EnemyManager.EnemyState.Waiting;
+        await UniTask.WaitForSeconds(attackAnimationPrePrepareTime);
 
         em.enemyState = EnemyManager.EnemyState.Attacking;
 
