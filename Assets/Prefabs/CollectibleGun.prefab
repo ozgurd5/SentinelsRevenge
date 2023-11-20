@@ -75,6 +75,7 @@ GameObject:
   - component: {fileID: 7774860979568394122}
   - component: {fileID: 1218104330691607472}
   - component: {fileID: 6984318811824365060}
+  - component: {fileID: 59540908905958101}
   m_Layer: 0
   m_Name: CollectibleGun
   m_TagString: Interactable
@@ -93,7 +94,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.572, y: -0.002, z: 5.808}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3177196890114061942}
   - {fileID: 6070683893359755733}
@@ -137,6 +138,21 @@ MonoBehaviour:
   goingUpTime: 1
   goingUpDistance: 1
   approachingPlayerTime: 1
+--- !u!114 &59540908905958101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5014485862555518965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2564fbce0b074014aa2645bb32155a7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetMaterials:
+  - {fileID: 2100000, guid: 88e8f242759cf5b4dbb594771bd7c3ce, type: 2}
+  - {fileID: 2100000, guid: fff05021c518b064bbf7a73f3ea41171, type: 2}
 --- !u!1 &5217173704318125415
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,8 +268,8 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -5025046822004302887, guid: 55d720881762c4a4bb40e7c1df752e80, type: 3}
-  - {fileID: 2439053324960705021, guid: 55d720881762c4a4bb40e7c1df752e80, type: 3}
+  - {fileID: 2100000, guid: 8fc8a4c11b4e1be4280ed5d904df909d, type: 2}
+  - {fileID: 2100000, guid: edbdba10e8200664ea1b39f13877391f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

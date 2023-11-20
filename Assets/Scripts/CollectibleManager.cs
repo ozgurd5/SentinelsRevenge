@@ -15,6 +15,8 @@ public class CollectibleManager : MonoBehaviour
     [SerializeField] private float goingUpDistance = 1;
     [SerializeField] private float approachingPlayerTime = 1;
 
+    private MaterialInterpolation materialChanger;
+
     private Transform playerTransform;
     private PlayerExtensionData ped;
     private PlayerStateData psd;
@@ -26,6 +28,8 @@ public class CollectibleManager : MonoBehaviour
 
     private void Awake()
     {
+        materialChanger = GetComponent<MaterialInterpolation>();
+
         playerTransform = GameObject.Find("Player").transform;
         ped = playerTransform.GetComponent<PlayerExtensionData>();
         psd = playerTransform.GetComponent<PlayerStateData>();
@@ -64,6 +68,8 @@ public class CollectibleManager : MonoBehaviour
 
         transform.DORotate(collectibleRotationTarget, fixingRotationTime / 2);
         await UniTask.WaitForSeconds(fixingRotationTime / 2);
+
+        materialChanger.ChangeMaterial(approachingPlayerTime);
 
         Transform approachingTarget;
         if (isArms) approachingTarget = playerTransform.GetChild(1);
