@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -6,7 +8,8 @@ public class EnemyAI : MonoBehaviour
     [Header("Assign - Values")]
     [SerializeField] private float walkPointRange = 10f;
     [SerializeField] private float sightRange = 20f;
-    [SerializeField] private float attackRange = 7f;
+    public float attackRange = 7f;
+    [SerializeField] private float verticalAttackRange = 2f;
     [SerializeField] private float walkingSpeed = 2f;
     [SerializeField] private float runningSpeed = 5f;
 
@@ -26,6 +29,10 @@ public class EnemyAI : MonoBehaviour
     //private int groundLayer = 1 << 6;
     private int playerLayer = 1 << 7;
 
+    //TODO: AAAAA
+    [Header("AAA")] public bool isTier3;
+    public bool canTier3LookAtPlayer = true;
+
     private void Awake()
     {
         playerTransform = GameObject.Find("Player").transform;
@@ -36,10 +43,18 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
-        if (em.enemyState is EnemyManager.EnemyState.Dead or EnemyManager.EnemyState.Waiting) return;
-
         isPlayerInSightRange = Physics.CheckSphere(transform.position, sightRange, playerLayer);
-        isPlayerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayer);
+        if (isTier3) isPlayerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayer);
+        else isPlayerInAttackRange = Physics.CheckBox(transform.position, new Vector3(attackRange, verticalAttackRange, attackRange),
+            Quaternion.identity, playerLayer);
+
+        if (!isTier3 && em.enemyState == EnemyManager.EnemyState.Attacking)
+        {
+            transform.LookAt(playerTransform, Vector3.up);
+            transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
+        }
+
+        if (em.enemyState is EnemyManager.EnemyState.Dead or EnemyManager.EnemyState.GettingDamage or EnemyManager.EnemyState.Attacking) return;
 
         if (!isPlayerInSightRange && !isPlayerInAttackRange && !didEncounterPlayer) Patrol();
         else if (isPlayerInAttackRange && isPlayerInSightRange) Attack();
@@ -48,6 +63,8 @@ public class EnemyAI : MonoBehaviour
 
     private void Patrol()
     {
+        em.enemyState = EnemyManager.EnemyState.Walking;
+
         if (!isWalkPointSet) SearchWalkPoint();
         else if (isWalkPointSet) navMeshAgent.SetDestination(walkPoint);
 
@@ -85,20 +102,40 @@ public class EnemyAI : MonoBehaviour
         navMeshAgent.speed = runningSpeed;
     }
 
+    private bool isRotating;
+    public bool canTier3DynamicallyLookAtPlayer = true;
     private void Attack()
     {
         ecm.Attack();
 
-        navMeshAgent.SetDestination(transform.position); //Better than navMeshAgent.isStopped = true;
+        navMeshAgent.SetDestination(transform.position); //Sudden stop
 
-        transform.LookAt(playerTransform, Vector3.up);
-        transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
+        if (canTier3LookAtPlayer) //TODO: AAAAA
+        {
+            if (!canTier3DynamicallyLookAtPlayer && !isRotating && isTier3) Rotate();
+            if (canTier3DynamicallyLookAtPlayer)
+            {
+                transform.LookAt(playerTransform, Vector3.up);
+                transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
+            }
+        }
+    }
+
+    private async void Rotate()
+    {
+        canTier3DynamicallyLookAtPlayer = false;
+        isRotating = true;
+        transform.DOLookAt(playerTransform.position, 0.2f, AxisConstraint.None, Vector3.up);
+        await UniTask.WaitForSeconds(0.2f);
+        isRotating = false;
+        canTier3DynamicallyLookAtPlayer = true;
     }
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
+        if (isTier3) Gizmos.DrawWireSphere(transform.position, attackRange);
+        else Gizmos.DrawWireCube(transform.position, new Vector3(attackRange, verticalAttackRange, attackRange) * 2);
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, sightRange);

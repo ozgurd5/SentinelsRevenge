@@ -825,7 +825,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkPointRange: 10
   sightRange: 10
-  attackRange: 3.5
+  attackRange: 2
+  verticalAttackRange: 1
   walkingSpeed: 5
   runningSpeed: 7
   walkPoint: {x: 0, y: 0, z: 0}
@@ -834,6 +835,9 @@ MonoBehaviour:
   isPlayerInAttackRange: 0
   didEncounterPlayer: 0
   overlapSphereColliders: []
+  isTier3: 0
+  canTier3LookAtPlayer: 1
+  canTier3DynamicallyLookAtPlayer: 1
 --- !u!114 &4550598108801313535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -863,8 +867,8 @@ MonoBehaviour:
   gunLineOutTransform: {fileID: 0}
   health: 10
   damage: 3
-  attackAnimationPrePrepareTime: 0.3
-  attackAnimationPrepareTime: 0.3
+  attackAnimationPrePrepareTime: 0
+  attackAnimationPrepareTime: 0.4
   attackAnimationTime: 1
   attackCooldownTime: 1
   knockBackAmount: 4
@@ -894,9 +898,9 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.75
   m_Speed: 3.5
-  m_Acceleration: 8
+  m_Acceleration: 200
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 200
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1

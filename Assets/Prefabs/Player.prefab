@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 2462829384482721296}
   m_Layer: 7
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -294,7 +294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49ea6e61220a479458a09d919452b714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactRange: 5
+  interactRange: 10
   rangeAttackRange: 40
   opacity: 0.3
   overlapBoxHalfExtends: {x: 1.5, y: 1, z: 1.5}

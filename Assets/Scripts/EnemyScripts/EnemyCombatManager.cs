@@ -56,27 +56,80 @@ public class EnemyCombatManager : MonoBehaviour, IDamageable
 
     public async void Attack()
     {
-        if (!isAttackCooldownOver) return;
-
-        StartAttackCooldown();
         em.enemyState = EnemyManager.EnemyState.Waiting;
+
+        if (!isAttackCooldownOver) return;
+        StartAttackCooldown();
+
+        if (isTier3)
+        {
+            eai.canTier3LookAtPlayer = false;
+            eai.canTier3DynamicallyLookAtPlayer = false;
+        }
+
         await UniTask.WaitForSeconds(attackAnimationPrePrepareTime);
         if (em.enemyState == EnemyManager.EnemyState.Dead) return; //Explanation is in down
 
+        if (!eai.isPlayerInAttackRange) return; //TODO: AAAA
+
         em.enemyState = EnemyManager.EnemyState.Attacking;
+
         await UniTask.WaitForSeconds(attackAnimationPrepareTime);
+        if (em.enemyState == EnemyManager.EnemyState.Dead) return; //Explanation is in down
+
+        if (!IsPlayerEscaped()) playerDamageable.GetDamage(damage, transform.forward);
 
         if (isTier3) ShootLaser();
-        if (em.enemyState == EnemyManager.EnemyState.Dead) return; //Explanation is in down
-        if (!eai.isPlayerInAttackRange) return; //Giving player time to escape/dodge
-        else playerDamageable.GetDamage(damage, transform.forward);
-        await UniTask.WaitForSeconds(attackAnimationTime - attackAnimationPrepareTime);
 
+        await UniTask.WaitForSeconds(attackAnimationTime - attackAnimationPrepareTime);
         if (em.enemyState == EnemyManager.EnemyState.Dead) return; //Explanation is in down
-        em.enemyState = EnemyManager.EnemyState.Walking;
+
+        em.enemyState = EnemyManager.EnemyState.Waiting;
+
+        //TODO: AAA
+        eai.canTier3LookAtPlayer = true;
 
         //Explanation: When enemy decided to attack the player, it may die while attacking async operation is in process. That results in resurrection and..
         //..must not be happen.
+    }
+
+    private async void StartAttackCooldown()
+    {
+        isAttackCooldownOver = false;
+        await UniTask.WaitForSeconds(attackCooldownTime);
+        isAttackCooldownOver = true;
+    }
+
+    //TODO: clean
+    private bool isHitTarget;
+    private Transform hitTargetTransform;
+
+    private bool IsPlayerEscaped()
+    {
+        if (!eai.isPlayerInAttackRange) return true;
+        if (!isTier3) return !eai.isPlayerInAttackRange;
+
+        isHitTarget = false;
+        RaycastHit hit;
+        if (!Physics.Raycast(gunLineOutTransform.position, transform.forward, out hit, eai.attackRange)) return true;
+
+        if (hit.collider.CompareTag("Player"))
+        {
+            hitTargetTransform = playerDamageable.GetTransform();
+            isHitTarget = true;
+            return false;
+        }
+
+        if (hit.collider.CompareTag("Enemy"))
+        {
+            IDamageable damageable = hit.collider.GetComponent<IDamageable>();
+            damageable.GetDamage(damage, transform.forward);
+            hitTargetTransform = damageable.GetTransform();
+            isHitTarget = true;
+            return true;
+        }
+
+        else return true;
     }
 
     private async void ShootLaser()
@@ -87,26 +140,23 @@ public class EnemyCombatManager : MonoBehaviour, IDamageable
         gunLineRenderer.enabled = false;
     }
 
-    private Vector3 playerPositionOffset = new Vector3(0f, 1f, 0f);
+    private Vector3 positionOffset = new Vector3(0f, 1f, 0f);
     private void Update()
     {
         if (isTier3 && gunLineRenderer.enabled)
         {
-            gunLineRenderer.SetPosition(0, gunLineOutTransform.position);
-            gunLineRenderer.SetPosition(1, playerDamageable.GetTransform().position + playerPositionOffset);
-        }
-    }
+            Vector3 endPosition;
+            if (isHitTarget) endPosition = hitTargetTransform.position + positionOffset;
+            else endPosition = gunLineOutTransform.position + transform.forward * eai.attackRange;
 
-    private async void StartAttackCooldown()
-    {
-        isAttackCooldownOver = false;
-        await UniTask.WaitForSeconds(attackCooldownTime);
-        isAttackCooldownOver = true;
+            gunLineRenderer.SetPosition(0, gunLineOutTransform.position);
+            gunLineRenderer.SetPosition(1, endPosition);
+        }
     }
 
     public async void GetDamage(int damageTakenAmount, Vector3 attackerTransformForward)
     {
-        em.enemyState = EnemyManager.EnemyState.Waiting;
+        em.enemyState = EnemyManager.EnemyState.GettingDamage;
 
         nma.SetDestination(transform.position); //Sudden stop
         nma.isStopped = true;
@@ -120,7 +170,7 @@ public class EnemyCombatManager : MonoBehaviour, IDamageable
         await UniTask.WaitForSeconds(knockBackDuration);
 
         nma.isStopped = false;
-        em.enemyState = EnemyManager.EnemyState.Walking;
+        em.enemyState = EnemyManager.EnemyState.Waiting;
     }
 
     private async void PlayKnockBackAnimation(Vector3 attackerTransformForward)
@@ -166,6 +216,7 @@ public class EnemyCombatManager : MonoBehaviour, IDamageable
     {
         eai.didEncounterPlayer = false;
         health = originalHealth;
+        OnDamageTaken?.Invoke(health);
     }
 
     private void OnDestroy()
