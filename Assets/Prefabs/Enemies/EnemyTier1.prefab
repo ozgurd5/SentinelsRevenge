@@ -350,6 +350,7 @@ MonoBehaviour:
   overlapSphereColliders: []
   isTier3: 0
   canTier3LookAtPlayer: 1
+  num: 0.2
   canTier3DynamicallyLookAtPlayer: 1
 --- !u!114 &600626762289405164
 MonoBehaviour:

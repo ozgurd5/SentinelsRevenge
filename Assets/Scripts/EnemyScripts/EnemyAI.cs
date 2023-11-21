@@ -19,14 +19,13 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private bool isPlayerInSightRange;
     public bool isPlayerInAttackRange;
     public bool didEncounterPlayer;
-    [SerializeField] private Collider[] overlapSphereColliders;
 
     private Transform playerTransform;
     private NavMeshAgent navMeshAgent;
     private EnemyManager em;
     private EnemyCombatManager ecm;
 
-    //private int groundLayer = 1 << 6;
+    private int groundLayer = 1 << 6;
     private int playerLayer = 1 << 7;
 
     //TODO: AAAAA
@@ -73,22 +72,15 @@ public class EnemyAI : MonoBehaviour
         navMeshAgent.speed = walkingSpeed;
     }
 
+    public float num = 0.2f;
+
     private void SearchWalkPoint()
     {
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
         float randomX = Random.Range(-walkPointRange, walkPointRange);
 
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-
-        //TODO: Walk point must must be over a ground, not in the air
-
-        //Walk point must must be in open space, not inside of an object
-        overlapSphereColliders = Physics.OverlapSphere(walkPoint, 2f); //Don't use non-alloc. Check the note in bellow
-        if (overlapSphereColliders.Length > 1) isWalkPointSet = true;
-
-        //The note in bellow: We must not use OverlapSphereNonAlloc because it doesn't count initial colliders. These are the ones I want to count..
-        //..but it doesn't. I think it works like sphereCast. Unit docs note about sphereCast:
-        //SphereCast will not detect colliders for which the sphere overlaps the collider.
+        if (Physics.CheckSphere(walkPoint, num, groundLayer)) isWalkPointSet = true;
     }
 
     private void Chase()
