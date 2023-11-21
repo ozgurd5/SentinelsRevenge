@@ -9,7 +9,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float walkPointRange = 10f;
     [SerializeField] private float sightRange = 20f;
     public float attackRange = 7f;
-    [SerializeField] private float verticalAttackRange = 2f;
+    public float verticalAttackRange = 2f;
     [SerializeField] private float walkingSpeed = 2f;
     [SerializeField] private float runningSpeed = 5f;
 
@@ -44,8 +44,7 @@ public class EnemyAI : MonoBehaviour
     private void Update()
     {
         isPlayerInSightRange = Physics.CheckSphere(transform.position, sightRange, playerLayer);
-        if (isTier3) isPlayerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayer);
-        else isPlayerInAttackRange = Physics.CheckBox(transform.position, new Vector3(attackRange, verticalAttackRange, attackRange),
+        isPlayerInAttackRange = Physics.CheckBox(transform.position, new Vector3(attackRange, verticalAttackRange, attackRange),
             Quaternion.identity, playerLayer);
 
         if (!isTier3 && em.enemyState == EnemyManager.EnemyState.Attacking)
@@ -134,8 +133,8 @@ public class EnemyAI : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        if (isTier3) Gizmos.DrawWireSphere(transform.position, attackRange);
-        else Gizmos.DrawWireCube(transform.position, new Vector3(attackRange, verticalAttackRange, attackRange) * 2);
+        //if (isTier3) Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.DrawWireCube(transform.position, new Vector3(attackRange, verticalAttackRange, attackRange) * 2);
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, sightRange);

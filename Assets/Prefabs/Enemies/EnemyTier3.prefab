@@ -502,7 +502,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isTier3: 1
   gunLineOutTransform: {fileID: 3492515017712133754}
-  health: 10
+  health: 9
   damage: 3
   attackAnimationPrePrepareTime: 0.2
   attackAnimationPrepareTime: 0

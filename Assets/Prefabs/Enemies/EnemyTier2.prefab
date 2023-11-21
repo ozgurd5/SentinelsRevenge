@@ -767,7 +767,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.68991655, z: 0, w: 0.723889}
   m_LocalPosition: {x: -16.84, y: 0.00000011920929, z: -0.694}
-  m_LocalScale: {x: 2.5000002, y: 2.5, z: 2.5000002}
+  m_LocalScale: {x: 2.5000005, y: 2.5, z: 2.5000005}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5095097007936673435}
@@ -824,8 +824,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkPointRange: 10
-  sightRange: 10
-  attackRange: 2
+  sightRange: 20
+  attackRange: 2.5
   verticalAttackRange: 1
   walkingSpeed: 5
   runningSpeed: 7

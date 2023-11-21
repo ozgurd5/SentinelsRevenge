@@ -19,6 +19,8 @@ public class EnemyHealthBarManager : MonoBehaviour
 
     private void UpdateHealthBar(int newHealth)
     {
+        if (newHealth <= 0) healthBar.gameObject.SetActive(false);
+
         healthBar.value = newHealth;
     }
 }

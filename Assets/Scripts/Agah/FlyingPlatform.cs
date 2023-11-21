@@ -18,7 +18,7 @@ public class FlyingPlatform : MonoBehaviour
             if (Vector3.Distance(transform.position, target.position) <= 0)
             {
                 target = target == startPoint ? endPoint : startPoint;
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(2f);
             }
             yield return null;
         }

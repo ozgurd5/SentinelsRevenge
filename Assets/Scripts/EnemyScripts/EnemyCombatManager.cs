@@ -1,5 +1,6 @@
 using System;
 using Cysharp.Threading.Tasks;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -111,7 +112,7 @@ public class EnemyCombatManager : MonoBehaviour, IDamageable
 
         isHitTarget = false;
         RaycastHit hit;
-        if (!Physics.Raycast(gunLineOutTransform.position, transform.forward, out hit, eai.attackRange)) return true;
+        if (!Physics.Raycast(gunLineOutTransform.position, transform.forward, out hit, eai.attackRange * math.sqrt(2))) return true;
 
         if (hit.collider.CompareTag("Player"))
         {
